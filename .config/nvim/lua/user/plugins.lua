@@ -63,6 +63,7 @@ return packer.startup(function(use)
       { "nvim-treesitter/nvim-treesitter"},
     }
   }
+  use { 'rmagatti/auto-session' }
 
   -- Colorschemes
   use { "folke/tokyonight.nvim" }

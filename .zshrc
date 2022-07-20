@@ -123,12 +123,6 @@ source $ZSH/oh-my-zsh.sh
 export PNPM_HOME="/home/johnredd/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
-#
-#
-# Applications
-export APPLICATIONS_HOME="/home/johnredd/Applications"
-export PATH="$APPLICATIONS_HOME:$PATH"
-# pnpm end
 
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh

@@ -8,13 +8,14 @@ local formatting = null_ls.builtins.formatting
 local code_actions = null_ls.builtins.code_actions
 local diagnostics = null_ls.builtins.diagnostics
 
--- https://github.com/prettier-solidity/prettier-plugin-solidity
 null_ls.setup {
   debug = false,
   sources = {
     formatting.gofmt,
     formatting.goimports,
-    formatting.pint,
+    formatting.pint.with({
+      command = "pint"
+    }),
     formatting.prettierd,
     -- formatting.eslint_d,
     formatting.prismaFmt,
@@ -25,6 +26,8 @@ null_ls.setup {
 
     -- diagnostics.codespell, -- needs to be installed with pip
     diagnostics.eslint_d,
-    diagnostics.phpstan,
+    -- diagnostics.phpstan.with({
+    --   args = { "analyze", "--level", "6", "--error-format", "json", "--no-progress", "$FILENAME" }
+    -- }),
   },
 }

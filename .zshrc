@@ -86,6 +86,7 @@ plugins=(
 	zsh-autosuggestions
 	docker-compose
 	kubectl
+  nx-completion
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -123,6 +124,11 @@ source $ZSH/oh-my-zsh.sh
 export PNPM_HOME="/home/johnredd/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+
+# composer
+export COMPOSER_HOME="/home/johnredd/.config/composer/vendor/bin/"
+export PATH="$COMPOSER_HOME:$PATH"
+# composer end
 
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh

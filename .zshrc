@@ -86,7 +86,7 @@ plugins=(
 	zsh-autosuggestions
 	docker-compose
 	kubectl
-  nx-completion
+  # nx-completion
 )
 
 source $ZSH/oh-my-zsh.sh

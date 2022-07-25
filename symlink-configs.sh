@@ -5,4 +5,5 @@ for d in .config/* ; do
 done
 
 ln -sf "$PWD/.tmux.conf" ~/ | 2>&1
+ln -sf "$PWD/gruvbox-dark.conf" ~/.tmux/ | 2>&1
 ln -sf "$PWD/.zshrc" ~/ | 2>&1

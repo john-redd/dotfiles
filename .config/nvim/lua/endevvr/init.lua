@@ -1,9 +1,9 @@
-require("theprimeagen.set")
+require("endevvr.set")
 
-require("theprimeagen.remap")
+require("endevvr.remap")
 
 local augroup = vim.api.nvim_create_augroup
-local ThePrimeagenGroup = augroup('ThePrimeagen', {})
+local EndevvrGroup = augroup('Endevvr', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -24,7 +24,7 @@ autocmd('TextYankPost', {
 })
 
 autocmd({"BufWritePre"}, {
-    group = ThePrimeagenGroup,
+    group = EndevvrGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })

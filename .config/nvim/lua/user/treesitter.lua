@@ -15,3 +15,10 @@ configs.setup({
 	},
 	indent = { enable = true, disable = { "python", "css" } },
 })
+
+local status_ok_context, context = pcall(require, "nvim-treesitter-context")
+if not status_ok_context then
+	return
+end
+
+context.setup({})

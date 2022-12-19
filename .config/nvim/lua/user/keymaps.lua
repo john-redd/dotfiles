@@ -24,6 +24,10 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<C-q>", "<C-w>q", opts)
 keymap("n", "<C-s>", "<C-w>v", opts)
 
+-- Codeblock jumps
+keymap("n", "{", "}", opts)
+keymap("n", "}", "{", opts)
+
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
@@ -41,10 +45,7 @@ keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
 keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
 
 -- Better paste
-keymap("v", "p", '"_dP', opts)
-
--- Insert --
-keymap("i", "jj", "<ESC>", opts)
+keymap("v", "p", '"_dp', opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -58,6 +59,18 @@ keymap("v", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 
+-- Next Error?
+vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+
+-- Next Location List
+vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
 -- Plugins --
 
 -- NvimTree
@@ -68,15 +81,21 @@ keymap("n", "<leader>ec", ":NvimTreeCollapse<CR>", opts)
 -- Telescope
 keymap("n", "<leader>ff", ":Telescope find_files hidden=true<CR>", opts)
 keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
+-- keymap("n", "<leader>fw", ":Telescope grep_string<CR>", opts)
+keymap("n", "<leader>fw", function()
+	require("telescope.builtin").grep_string({ search = vim.fn.input("Grep For > ") })
+end, opts)
+keymap("n", "<leader>fg", ":Telescope git_files<CR>", opts)
 keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+keymap("n", "<leader>fc", ":Telescope commands<CR>", opts)
 
 -- Git
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
 
 -- Comment
-keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
-keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
+keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
+keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>')
 
 -- Refactoring
 -- Remaps for the refactoring operations currently offered by the plugin
@@ -92,3 +111,9 @@ keymap("n", "<leader>rbf", [[ <Cmd>lua require('refactoring').refactor('Extract 
 -- Inline variable can also pick up the identifier currently under the cursor without visual mode
 keymap("n", "<leader>ri", [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], opts)
 
+-- Cloak
+keymap("n", "<leader>t", ":CloakToggle<CR>")
+
+-- DAP
+keymap("n", "<leader>dc", ":lua require'dap'.continue()<CR>")
+keymap("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>")

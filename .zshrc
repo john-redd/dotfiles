@@ -136,3 +136,16 @@ source /usr/share/fzf/completion.zsh
 export EDITOR='nvim'
 export VISUAL='nvim'
 
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+
+export DENO_INSTALL="/home/johnredd/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# bun completions
+[ -s "/home/johnredd/.bun/_bun" ] && source "/home/johnredd/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -18,26 +18,15 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 for_window [class="^.*"] border pixel 2
 client.focused #4c7899 #285577 #ffffff #9e893c #9e893c 
 
-# Only enable gaps on a workspace when there is at least one container
-# smart_gaps on
-
-# Only enable outer gaps when there is exactly one container
-# smart_gaps inverse_outer
-
-# Activate smart borders (always)
-# smart_borders on
-
-# Activate smart borders (only when there are effectively no gaps)
-# smart_borders no_gaps
-
 gaps inner 8
 # gaps outer 8
 gaps bottom 32
 
+# focus_wrapping workspace
+
 include ~/.config/i3/workspaces.conf
 include ~/.config/i3/assignments.conf
 include ~/.config/i3/manjaro-kde-compatability.conf
-# include ~/.config/i3/bar.conf
 include ~/.config/i3/resize.conf
 include ~/.config/i3/keybinds.conf
 include ~/.config/i3/mouse-binds.conf

@@ -13,10 +13,10 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
@@ -40,3 +40,7 @@ vim.keymap.set("v", ">", ">gv")
 
 vim.keymap.set("n", "<C-J>", vim.cmd.cnext, { silent = true, remap = false })
 vim.keymap.set("n", "<C-K>", vim.cmd.cprevious, { silent = true, remap = false })
+
+vim.keymap.set("n", "<leader>C", CopyFilePathAbsolute, { silent = true, remap = false })
+vim.keymap.set("n", "<leader>c", CopyFilePathRelative, { silent = true, remap = false })
+

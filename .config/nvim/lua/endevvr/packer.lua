@@ -1,21 +1,36 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+    vim.cmd([[packadd packer.nvim]])
+    return true
+  end
+  return false
+end
 
--- Only required if you have packer configured as `opt`
-vim.cmd.packadd("packer.nvim")
+local packer_bootstrap_ok = pcall(ensure_packer)
+
+if not packer_bootstrap_ok then
+  return
+end
 
 return require("packer").startup(function(use)
   -- Packer can manage itself
   use("wbthomason/packer.nvim")
 
+  -- Telescope
   use({
     "nvim-telescope/telescope.nvim",
     tag = "0.1.0",
     requires = { { "nvim-lua/plenary.nvim" } },
   })
-
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make", cond = vim.fn.executable("make") == 1 })
 
+  -- Colorchemes
+  use("shaunsingh/nord.nvim")
+  use("sainnhe/gruvbox-material")
+  use("luisiacc/gruvbox-baby")
   use("folke/tokyonight.nvim")
   use("ellisonleao/gruvbox.nvim")
   use("tanvirtin/monokai.nvim")
@@ -23,9 +38,6 @@ return require("packer").startup(function(use)
   use({
     "rose-pine/neovim",
     as = "rose-pine",
-    config = function()
-      vim.cmd("colorscheme rose-pine")
-    end,
   })
   use({
     "catppuccin/nvim",
@@ -33,6 +45,7 @@ return require("packer").startup(function(use)
     run = ":CatppuccinCompile",
   })
 
+  -- Treesitter
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
   use("nvim-treesitter/playground")
   use({
@@ -40,15 +53,13 @@ return require("packer").startup(function(use)
     after = "nvim-treesitter",
   })
 
-  use("theprimeagen/harpoon")
-  use("mbbill/undotree")
-
   -- Git
   use("tpope/vim-fugitive")
   use("lewis6991/gitsigns.nvim")
 
   use("numToStr/Comment.nvim")
 
+  -- LSP
   use({
     "VonHeikemen/lsp-zero.nvim",
     requires = {
@@ -56,6 +67,8 @@ return require("packer").startup(function(use)
       { "neovim/nvim-lspconfig" },
       { "williamboman/mason.nvim" },
       { "williamboman/mason-lspconfig.nvim" },
+
+      -- Formatters
       { "jose-elias-alvarez/null-ls.nvim" },
 
       -- Autocompletion
@@ -72,15 +85,22 @@ return require("packer").startup(function(use)
     },
   })
 
+  -- Utility
+  use("theprimeagen/harpoon")
+  use("mbbill/undotree")
+  use({ "windwp/nvim-autopairs" })
   use("folke/zen-mode.nvim")
-  -- use("github/copilot.vim")
   use("moll/vim-bbye")
-
   use({
     "nvim-tree/nvim-tree.lua",
     requires = {
-      "nvim-tree/nvim-web-devicons", -- optional, for file icons
+      "nvim-tree/nvim-web-devicons",
     },
-    tag = "nightly", -- optional, updated every week. (see issue #1193)
+    tag = "nightly",
   })
+  -- use("github/copilot.vim")
+
+  -- Misc
+  use("renerocksai/telekasten.nvim")
+  use("chrisbra/csv.vim")
 end)

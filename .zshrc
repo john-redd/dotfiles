@@ -149,3 +149,4 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="/home/johnredd/.local/share/gem/ruby/3.0.0/bin:$PATH"

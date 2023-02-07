@@ -55,6 +55,7 @@ return require("packer").startup(function(use)
 
   -- Git
   use("tpope/vim-fugitive")
+  use("kdheepak/lazygit.nvim")
   use("lewis6991/gitsigns.nvim")
 
   use("numToStr/Comment.nvim")
@@ -103,4 +104,6 @@ return require("packer").startup(function(use)
   -- Misc
   use("renerocksai/telekasten.nvim")
   use("chrisbra/csv.vim")
+  use("goolord/alpha-nvim")
+  use("ahmedkhalf/project.nvim")
 end)

@@ -34,7 +34,6 @@ return require("packer").startup(function(use)
   use("folke/tokyonight.nvim")
   use("ellisonleao/gruvbox.nvim")
   use("tanvirtin/monokai.nvim")
-  use("folke/tokyonight.nvim")
   use({
     "rose-pine/neovim",
     as = "rose-pine",
@@ -44,6 +43,8 @@ return require("packer").startup(function(use)
     as = "cappuccin",
     run = ":CatppuccinCompile",
   })
+  use("rebelot/kanagawa.nvim")
+  use("sainnhe/everforest")
 
   -- Treesitter
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
@@ -54,7 +55,6 @@ return require("packer").startup(function(use)
   })
 
   -- Git
-  use("tpope/vim-fugitive")
   use("kdheepak/lazygit.nvim")
   use("lewis6991/gitsigns.nvim")
 
@@ -86,11 +86,17 @@ return require("packer").startup(function(use)
     },
   })
 
+  -- DAP
+  use({ "mfussenegger/nvim-dap" })
+  use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+
   -- Utility
   use("theprimeagen/harpoon")
   use("mbbill/undotree")
   use({ "windwp/nvim-autopairs" })
-  use("folke/zen-mode.nvim")
+  use({
+    "Pocco81/true-zen.nvim",
+  })
   use("moll/vim-bbye")
   use({
     "nvim-tree/nvim-tree.lua",
@@ -99,11 +105,18 @@ return require("packer").startup(function(use)
     },
     tag = "nightly",
   })
+  use({
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  })
+
   -- use("github/copilot.vim")
+  use("zbirenbaum/copilot.lua")
 
   -- Misc
   use("renerocksai/telekasten.nvim")
   use("chrisbra/csv.vim")
   use("goolord/alpha-nvim")
   use("ahmedkhalf/project.nvim")
+  use('xiyaowong/nvim-transparent')
 end)

@@ -4,11 +4,13 @@ lsp.preset("recommended")
 
 lsp.ensure_installed({
   "tsserver",
-  "eslint",
-  "sumneko_lua",
+  "lua_ls",
   "rust_analyzer",
   "gopls",
+  "tailwindcss",
 })
+
+local lspconfig_utils = require('lspconfig.util')
 
 local null_ls = require("null-ls")
 local null_opts = lsp.build_options("null-ls", {
@@ -40,8 +42,40 @@ null_ls.setup({
   },
 })
 
+local root_files = {
+  'workspace.json',
+  'package.json',
+  'tsconfig.json',
+  'jsconfig.json',
+  '.git',
+}
+
+local fallback_root_files = {
+  'package.json',
+  'tsconfig.json',
+  'jsconfig.json',
+  '.git',
+}
+
+local function tsserver_root_dir(fname)
+  -- local is_covr_repo = string.find(fname, "covr-2.0")
+  local primary = lspconfig_utils.root_pattern(unpack(root_files))(fname)
+  local fallback = lspconfig_utils.root_pattern(unpack(fallback_root_files))(fname)
+  local git_dir = lspconfig_utils.find_git_ancestor(fname)
+
+  return git_dir or primary or fallback
+end
+
+lsp.configure("tsserver", {
+  root_dir = tsserver_root_dir
+})
+
+lsp.configure("tailwindcss", {
+  filetypes = { "rust", "html", "javascript", "javascriptreact", "typescript", "typescriptreact" }
+})
+
 -- Fix Undefined global 'vim'
-lsp.configure("sumneko_lua", {
+lsp.configure("lua_ls", {
   settings = {
     Lua = {
       diagnostics = {
@@ -95,6 +129,33 @@ lsp.configure("jsonls", {
   },
 })
 
+lsp.configure("yamlls", {
+  cmd = { "yaml-language-server", "--stdio" },
+  filetypes = { "yaml", "yaml.docker-compose" },
+  settings = {
+    redhat = {
+      telemetry = {
+        enabled = false
+      }
+    },
+    yaml = {
+      keyOrdering = false,
+      schemaStore = { enable = true },
+      schemas = {
+        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*"
+      },
+    }
+  }
+})
+-- lsp.yamlls.setup({
+--   settings = {
+--     yaml = {
+--       keyOrdering = false,
+--       schemaStore = { enable = true },
+--     }
+--   }
+-- })
+
 lsp.configure("prettier", {
   bin = "prettier",
   filetypes = {
@@ -144,6 +205,14 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     end
   end, { "i", "s" }),
 })
+
+-- cmp.event:on("menu_opened", function()
+--   vim.b.copilot_suggestion_hidden = true
+-- end)
+--
+-- cmp.event:on("menu_closed", function()
+--   vim.b.copilot_suggestion_hidden = false
+-- end)
 
 lsp.setup_nvim_cmp({
   sources = cmp.config.sources({

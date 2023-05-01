@@ -30,6 +30,11 @@ require("nvim-tree").setup({
         col = (gwidth - width) * 0.5,
       },
     },
+    mappings = {
+      list = {
+        { key = "<esc>", action = "close" },
+      }
+    },
   },
   hijack_directories = {
     enable = false,

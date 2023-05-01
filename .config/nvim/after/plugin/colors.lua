@@ -4,7 +4,6 @@ require("rose-pine").setup({
 
 require("gruvbox").setup({
   contrast = "soft",
-  italic = false,
 })
 
 function ColorMyPencils(color)
@@ -25,13 +24,23 @@ function ColorMyPencils(color)
     vim.g.gruvbox_material_background = "medium"
 
     -- Available values:   `'material'`, `'mix'`, `'original'`
-    vim.g.gruvbox_material_foreground = "mix"
+    vim.g.gruvbox_material_foreground = "original"
 
     vim.g.gruvbox_material_better_performance = 1
   end
 
   if color == "gruvbox-baby" then
     vim.g.gruvbox_baby_background_color = "soft"
+    -- Enable telescope theme
+    vim.g.gruvbox_baby_telescope_theme = 1
+
+    -- Enable transparent mode
+    vim.g.gruvbox_baby_transparent_mode = 1
+
+    vim.g.gruvbox_baby_color_overrides = { comment = "#918881" }
+    vim.g.gruvbox_baby_highlights = {
+      ["@tag.delimiter"] = { fg = "#458588", bg = "NONE", style="bold" }
+    }
 
     -- Required to get variables highlighted in rust
     --

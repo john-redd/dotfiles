@@ -38,11 +38,11 @@ return require("packer").startup(function(use)
     "rose-pine/neovim",
     as = "rose-pine",
   })
-  use({
-    "catppuccin/nvim",
-    as = "cappuccin",
-    run = ":CatppuccinCompile",
-  })
+  -- use({
+  --   "catppuccin/nvim",
+  --   as = "cappuccin",
+  --   run = ":CatppuccinCompile",
+  -- })
   use("rebelot/kanagawa.nvim")
   use("sainnhe/everforest")
 
@@ -53,10 +53,12 @@ return require("packer").startup(function(use)
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
   })
+  use("nvim-treesitter/nvim-treesitter-context")
 
   -- Git
   use("kdheepak/lazygit.nvim")
   use("lewis6991/gitsigns.nvim")
+  use("ThePrimeagen/git-worktree.nvim")
 
   use("numToStr/Comment.nvim")
 
@@ -109,6 +111,9 @@ return require("packer").startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   })
+  use("tpope/vim-dadbod")
+  use("kristijanhusak/vim-dadbod-ui")
+  use("kristijanhusak/vim-dadbod-completion")
 
   -- use("github/copilot.vim")
   use("zbirenbaum/copilot.lua")
@@ -119,4 +124,6 @@ return require("packer").startup(function(use)
   use("goolord/alpha-nvim")
   use("ahmedkhalf/project.nvim")
   use('xiyaowong/nvim-transparent')
+  use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
+  use('christoomey/vim-tmux-navigator')
 end)

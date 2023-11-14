@@ -131,12 +131,12 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export EDITOR='nvim'
 export VISUAL='nvim'
 
-export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
-export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-export DENO_INSTALL="/home/johnredd/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
+# export DENO_INSTALL="/home/johnredd/.deno"
+# export PATH="$DENO_INSTALL/bin:$PATH"
 
 # bun completions
 # [ -s "/home/johnredd/.bun/_bun" ] && source "/home/johnredd/.bun/_bun"
@@ -150,7 +150,7 @@ export TERM=xterm-256color
 export PATH="/Users/johnredd/.local/bin:$PATH"
 export PATH="/Users/johnredd/.fig/bin:$PATH"
 
-export MYVIMRC='~/.config/nvim/init.lua'
+export MYVIMRC="$HOME/.config/nvim/init.lua"
 alias python=python3
 
 # pnpm
@@ -160,3 +160,18 @@ export PATH="$PNPM_HOME:$PATH"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+export RUBYOPT=-W0
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
+
+export CDPATH=".:..:$HOME/covr:$HOME/endevvr:$HOME"
+
+# bun completions
+[ -s "/Users/johnredd/.bun/_bun" ] && source "/Users/johnredd/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"

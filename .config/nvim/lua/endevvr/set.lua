@@ -39,3 +39,10 @@ vim.opt.splitright = true -- force all vertical splits to go to the right of cur
 vim.opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
 vim.opt.fileencoding = "utf-8" -- the encoding written to a file
 vim.opt.nf = { "bin", "hex", "alpha" }
+
+vim.opt.wildignore = { "vendor/**", "**/vendor/**", "node_modules/**", "**/node_modules/**" }
+
+vim.g.tmux_navigator_disable_when_zoomed = 1
+vim.g.tmux_navigator_preserve_zoom = 1
+vim.g.tmux_navigator_disable_when_zoomed = 1
+vim.g.tmux_navigator_no_wrap = 1

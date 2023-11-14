@@ -43,18 +43,14 @@ null_ls.setup({
 })
 
 local root_files = {
-  'workspace.json',
-  'package.json',
-  'tsconfig.json',
-  'jsconfig.json',
-  '.git',
+  'nx.json',
+  'tsconfig.base.json',
 }
 
 local fallback_root_files = {
   'package.json',
   'tsconfig.json',
   'jsconfig.json',
-  '.git',
 }
 
 local function tsserver_root_dir(fname)
@@ -67,6 +63,10 @@ local function tsserver_root_dir(fname)
 end
 
 lsp.configure("tsserver", {
+  root_dir = tsserver_root_dir
+})
+
+lsp.configure("eslint", {
   root_dir = tsserver_root_dir
 })
 
@@ -219,6 +219,7 @@ lsp.setup_nvim_cmp({
     { name = "nvim_lsp" },
     { name = "nvim_lsp_signature_help" },
     { name = "nvim_lua" },
+    { name = "vim-dadbod-completion" },
     { name = "luasnip" },
     { name = "buffer" },
     { name = "path" },

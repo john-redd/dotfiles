@@ -2,6 +2,7 @@ require("endevvr.packer")
 require("endevvr.set")
 require("endevvr.commands")
 require("endevvr.remap")
+require("endevvr.autocommands")
 
 local augroup = vim.api.nvim_create_augroup
 local EndevvrGroup = augroup('Endevvr', {})

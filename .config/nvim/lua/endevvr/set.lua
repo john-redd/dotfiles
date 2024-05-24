@@ -28,6 +28,7 @@ vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "120"
+vim.opt.textwidth = 80
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50

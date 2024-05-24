@@ -155,7 +155,10 @@ alias python=python3
 
 # pnpm
 export PNPM_HOME="/Users/johnredd/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 # pnpm end
 
 # Fig post block. Keep at the bottom of this file.
@@ -175,3 +178,12 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+alias nx="p nx"
+
+alias clean-xcode="rm -rf ~/Library/Developer/Xcode/DerivedData"
+
+alias n="nvim"
+
+export PATH="$HOME/go/bin:$PATH"
+export GOPRIVATE='github.com/covr-care'

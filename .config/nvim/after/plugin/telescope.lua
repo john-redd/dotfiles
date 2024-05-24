@@ -25,6 +25,7 @@ pcall(require('telescope').load_extension, 'projects')
 
 require("telescope").setup {
   defaults = {
+    layout_strategy = 'vertical',
     mappings = {
       -- i = {
       --   ["<tab>"] = actions.toggle_selection + actions.move_selection_next,
@@ -41,7 +42,6 @@ require("telescope").setup {
 }
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.

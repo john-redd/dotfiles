@@ -7,7 +7,7 @@ require("gruvbox").setup({
 })
 
 function ColorMyPencils(color)
-  color = color or "gruvbox-baby"
+  color = color or "kanagawa"
   local overrides = nil
 
   -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })

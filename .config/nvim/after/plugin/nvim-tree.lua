@@ -1,47 +1,47 @@
 -- examples for your init.lua
 
 -- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
-local gwidth = vim.api.nvim_list_uis()[1].width
-local gheight = vim.api.nvim_list_uis()[1].height
-local width = 150
-local height = 70
-
--- empty setup using defaults
-require("nvim-tree").setup({
-  sync_root_with_cwd = false,
-  respect_buf_cwd = false,
-  update_focused_file = {
-    enable = true,
-    update_root = false
-  },
-  view = {
-    float = {
-      enable = true,
-      quit_on_focus_loss = true,
-      open_win_config = {
-        relative = "editor",
-        border = "rounded",
-        width = width,
-        height = height,
-        row = (gheight - height) * 0.4,
-        col = (gwidth - width) * 0.5,
-      },
-    },
-    mappings = {
-      list = {
-        { key = "<esc>", action = "close" },
-      }
-    },
-  },
-  hijack_directories = {
-    enable = false,
-    auto_open = false,
-  },
-})
-
-vim.keymap.set("n", "<leader>et", vim.cmd.NvimTreeToggle)
-vim.keymap.set("n", "<leader>ec", vim.cmd.NvimTreeCollapse)
-vim.keymap.set("n", "<leader>eff", vim.cmd.NvimTreeFindFile)
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+--
+-- local gwidth = vim.api.nvim_list_uis()[1].width
+-- local gheight = vim.api.nvim_list_uis()[1].height
+-- local width = 150
+-- local height = 70
+--
+-- -- empty setup using defaults
+-- require("nvim-tree").setup({
+--   sync_root_with_cwd = false,
+--   respect_buf_cwd = false,
+--   update_focused_file = {
+--     enable = true,
+--     update_root = false
+--   },
+--   view = {
+--     float = {
+--       enable = true,
+--       quit_on_focus_loss = true,
+--       open_win_config = {
+--         relative = "editor",
+--         border = "rounded",
+--         width = width,
+--         height = height,
+--         row = (gheight - height) * 0.4,
+--         col = (gwidth - width) * 0.5,
+--       },
+--     },
+--     mappings = {
+--       list = {
+--         { key = "<esc>", action = "close" },
+--       }
+--     },
+--   },
+--   hijack_directories = {
+--     enable = false,
+--     auto_open = false,
+--   },
+-- })
+--
+-- vim.keymap.set("n", "<leader>et", vim.cmd.NvimTreeToggle)
+-- vim.keymap.set("n", "<leader>ec", vim.cmd.NvimTreeCollapse)
+-- vim.keymap.set("n", "<leader>eff", vim.cmd.NvimTreeFindFile)

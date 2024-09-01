@@ -99,6 +99,128 @@ if dap_ok then
     dap_go.setup()
   end
 
+  local dap_vscode_js_ok, dap_vscode_js = pcall(require, "dap-vscode-js")
+
+  if dap_vscode_js_ok then
+    dap_vscode_js.setup({
+      -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
+      -- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
+      -- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
+      adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+      -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
+      -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
+      -- log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
+    })
+
+    for _, language in ipairs({ "typescript", "javascript" }) do
+      require("dap").configurations[language] = {
+        -- {
+        --   type = "pwa-node",
+        --   request = "launch",
+        --   name = "Launch file",
+        --   program = "${file}",
+        --   cwd = "${workspaceFolder}",
+        -- },
+        -- {
+        --   type = "pwa-node",
+        --   request = "attach",
+        --   name = "Attach",
+        --   processId = require 'dap.utils'.pick_process,
+        --   cwd = "${workspaceFolder}",
+        -- },
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Marketplace API Test",
+          -- trace = true, -- include debugger info
+          runtimeExecutable = "pnpm",
+          runtimeArgs = { "nx", "test", "marketplace-api", "--skip-nx-cache" },
+          timeout = 60000,
+          sourceMaps = true,
+          rootPath = "${workspaceFolder}",
+          cwd = "${workspaceFolder}",
+          console = "integratedTerminal",
+          internalConsoleOptions = "neverOpen",
+          stopOnEntry = true,
+          autoAttachChildProcesses = true,
+          smartStep = true,
+          skipFiles = {
+            "<node_internals>/**",
+            "**/node_modules/**"
+          }
+        },
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "People API Test",
+          -- trace = true, -- include debugger info
+          runtimeExecutable = "pnpm",
+          runtimeArgs = { "nx", "test", "services-people-api", "--skip-nx-cache" },
+          timeout = 60000,
+          sourceMaps = true,
+          rootPath = "${workspaceFolder}",
+          cwd = "${workspaceFolder}",
+          console = "integratedTerminal",
+          internalConsoleOptions = "neverOpen",
+          stopOnEntry = true,
+          autoAttachChildProcesses = true,
+          smartStep = true,
+          skipFiles = {
+            "<node_internals>/**",
+            "**/node_modules/**"
+          }
+        },
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Test",
+          -- trace = true, -- include debugger info
+          runtimeExecutable = "pnpm",
+          runtimeArgs = { "nx", "test", "--skip-nx-cache" },
+          timeout = 60000,
+          sourceMaps = true,
+          rootPath = "${workspaceFolder}",
+          cwd = "${workspaceFolder}",
+          console = "integratedTerminal",
+          internalConsoleOptions = "neverOpen",
+          stopOnEntry = true,
+          autoAttachChildProcesses = true,
+          smartStep = true,
+          skipFiles = {
+            "<node_internals>/**",
+            "**/node_modules/**"
+          },
+          args = function()
+            local argument_string = vim.fn.input('Program arguments: ')
+            return vim.fn.split(argument_string, " ", true)
+          end,
+        },
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Debug Jest Tests",
+          -- trace = true, -- include debugger info
+          runtimeExecutable = "node",
+          runtimeArgs = {
+            "./node_modules/jest/bin/jest.js",
+            "--runInBand",
+          },
+          rootPath = "${workspaceFolder}",
+          cwd = "${workspaceFolder}",
+          console = "integratedTerminal",
+          internalConsoleOptions = "neverOpen",
+          stopOnEntry = true,
+          autoAttachChildProcesses = true,
+          smartStep = true,
+          skipFiles = {
+            "<node_internals>/**",
+            "**/node_modules/**"
+          },
+        }
+      }
+    end
+  end
+
   local dap_virtual_text_ok, dap_virtual_text = pcall(require, "nvim-dap-virtual-text")
 
   if dap_virtual_text_ok then

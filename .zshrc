@@ -187,3 +187,7 @@ alias n="nvim"
 
 export PATH="$HOME/go/bin:$PATH"
 export GOPRIVATE='github.com/covr-care'
+
+# Disable monitor mode
+set m+
+export ATAC_KEY_BINDINGS=~/.config/atac/vim_key_bindings.toml

@@ -71,7 +71,7 @@ lsp.configure("eslint", {
 })
 
 lsp.configure("tailwindcss", {
-  filetypes = { "rust", "html", "javascript", "javascriptreact", "typescript", "typescriptreact" }
+  filetypes = { "rust", "html", "javascript", "javascriptreact", "typescript", "typescriptreact", "templ" }
 })
 
 -- Fix Undefined global 'vim'
@@ -128,6 +128,47 @@ lsp.configure("jsonls", {
     },
   },
 })
+
+-- lsp.configure("helm-ls", {
+--   logLevel = "info",
+--   valuesFiles = {
+--     mainValuesFile = "values.yaml",
+--     lintOverlayValuesFile = "values.lint.yaml",
+--     additionalValuesFilesGlobPattern = "values*.yaml"
+--   },
+--   yamlls = {
+--     enabled = true,
+--     -- diagnosticsLimit = 50,
+--     -- showDiagnosticsDirectly = false,
+--     path = "yaml-language-server",
+--     -- config = {
+--     --   schemas = {
+--     --     kubernetes = "templates/**",
+--     --   },
+--     --   completion = true,
+--     --   hover = true,
+--     --   -- any other config from https://github.com/redhat-developer/yaml-language-server#language-server-settings
+--     --   cmd = { "yaml-language-server", "--stdio" },
+--     --   filetypes = { "yaml", "yaml.docker-compose" },
+--     --   settings = {
+--     --     redhat = {
+--     --       telemetry = {
+--     --         enabled = false
+--     --       }
+--     --     },
+--     --     yaml = {
+--     --       keyOrdering = false,
+--     --       schemaStore = { enable = true },
+--     --       schemas = {
+--     --         ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*"
+--     --       },
+--     --     }
+--     --   }
+--     --
+--     -- }
+--   }
+-- })
+-- lsp.configure("yamlls")
 
 lsp.configure("yamlls", {
   cmd = { "yaml-language-server", "--stdio" },

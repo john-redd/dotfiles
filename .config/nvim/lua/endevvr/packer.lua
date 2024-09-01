@@ -22,7 +22,7 @@ return require("packer").startup(function(use)
   -- Telescope
   use({
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.0",
+    tag = "0.1.8",
     requires = { { "nvim-lua/plenary.nvim" } },
   })
   use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make", cond = vim.fn.executable("make") == 1 })
@@ -38,6 +38,8 @@ return require("packer").startup(function(use)
     "rose-pine/neovim",
     as = "rose-pine",
   })
+  use("rebelot/kanagawa.nvim")
+
   -- use({
   --   "catppuccin/nvim",
   --   as = "cappuccin",
@@ -58,7 +60,9 @@ return require("packer").startup(function(use)
   -- Git
   use("kdheepak/lazygit.nvim")
   use("lewis6991/gitsigns.nvim")
-  use("ThePrimeagen/git-worktree.nvim")
+  -- use("ThePrimeagen/git-worktree.nvim")
+  use("pwntester/octo.nvim")
+  use("tpope/vim-fugitive")
 
   use("numToStr/Comment.nvim")
 
@@ -87,12 +91,19 @@ return require("packer").startup(function(use)
       { "rafamadriz/friendly-snippets" },
     },
   })
+  use('towolf/vim-helm')
 
   -- DAP
   use({ "mfussenegger/nvim-dap" })
   use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } })
   use("theHamsta/nvim-dap-virtual-text")
   use("leoluz/nvim-dap-go")
+  use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
+  use({
+    "microsoft/vscode-js-debug",
+    opt = true,
+    run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
+  })
 
   -- Utility
   use("theprimeagen/harpoon")
@@ -102,6 +113,7 @@ return require("packer").startup(function(use)
     "Pocco81/true-zen.nvim",
   })
   use("moll/vim-bbye")
+  use("stevearc/oil.nvim")
   use({
     "nvim-tree/nvim-tree.lua",
     requires = {
@@ -116,6 +128,7 @@ return require("packer").startup(function(use)
   use("tpope/vim-dadbod")
   use("kristijanhusak/vim-dadbod-ui")
   use("kristijanhusak/vim-dadbod-completion")
+  use("stevearc/aerial.nvim")
 
   -- use("github/copilot.vim")
   use("zbirenbaum/copilot.lua")

@@ -45,7 +45,6 @@ return require("packer").startup(function(use)
   --   as = "cappuccin",
   --   run = ":CatppuccinCompile",
   -- })
-  use("rebelot/kanagawa.nvim")
   use("sainnhe/everforest")
 
   -- Treesitter
@@ -105,6 +104,10 @@ return require("packer").startup(function(use)
     run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
   })
 
+  -- GoLang
+  use({ 'ray-x/go.nvim' })
+  use({ 'ray-x/guihua.lua' })
+
   -- Utility
   use("theprimeagen/harpoon")
   use("mbbill/undotree")
@@ -113,7 +116,7 @@ return require("packer").startup(function(use)
     "Pocco81/true-zen.nvim",
   })
   use("moll/vim-bbye")
-  use("stevearc/oil.nvim")
+  -- use("stevearc/oil.nvim")
   use({
     "nvim-tree/nvim-tree.lua",
     requires = {

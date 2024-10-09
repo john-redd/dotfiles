@@ -93,11 +93,11 @@ if dap_ok then
     end
   end
 
-  local dap_go_ok, dap_go = pcall(require, "dap-go")
-
-  if dap_go_ok then
-    dap_go.setup()
-  end
+  -- local dap_go_ok, dap_go = pcall(require, "dap-go")
+  --
+  -- if dap_go_ok then
+  --   dap_go.setup()
+  -- end
 
   local dap_vscode_js_ok, dap_vscode_js = pcall(require, "dap-vscode-js")
 

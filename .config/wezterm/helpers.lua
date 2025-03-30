@@ -2,7 +2,9 @@ local wezterm = require 'wezterm'
 
 local function add_font_settings(config)
   config.font = wezterm.font 'MesloLGS NF'
-  config.font_size = 15
+  config.font_size = 20
+  -- config.font = wezterm.font 'Departure Mono'
+  -- config.font_size = 22
 end
 
 local function add_background_settings(config)

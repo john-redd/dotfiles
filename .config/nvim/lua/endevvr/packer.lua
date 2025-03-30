@@ -109,6 +109,8 @@ return require("packer").startup(function(use)
   use({ 'ray-x/guihua.lua' })
 
   -- Utility
+  use("folke/todo-comments.nvim")
+  use("folke/snacks.nvim")
   use("theprimeagen/harpoon")
   use("mbbill/undotree")
   use({ "windwp/nvim-autopairs" })
@@ -116,7 +118,7 @@ return require("packer").startup(function(use)
     "Pocco81/true-zen.nvim",
   })
   use("moll/vim-bbye")
-  -- use("stevearc/oil.nvim")
+  use("stevearc/oil.nvim")
   use({
     "nvim-tree/nvim-tree.lua",
     requires = {

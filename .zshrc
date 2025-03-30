@@ -1,5 +1,5 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -86,7 +86,8 @@ plugins=(
 	git
 	docker-compose
 	kubectl
-  asdf
+  # asdf
+  deno
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -161,9 +162,6 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
 export RUBYOPT=-W0
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
 
@@ -191,3 +189,22 @@ export GOPRIVATE='github.com/covr-care'
 # Disable monitor mode
 set m+
 export ATAC_KEY_BINDINGS=~/.config/atac/vim_key_bindings.toml
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+
+source <(stern --completion=zsh)
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+. "/Users/johnredd/.deno/env"
+
+export MANPAGER="nvim --clean +Man!"
+
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+# append completions to fpath
+# fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+# # initialise completions with ZSH's compinit
+# autoload -Uz compinit && compinit

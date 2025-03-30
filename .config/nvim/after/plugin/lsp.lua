@@ -28,9 +28,10 @@ null_ls.setup({
   sources = {
     formatting.gofmt,
     formatting.goimports,
-    formatting.pint.with({
-      command = "pint",
-    }),
+    -- formatting.pint.with({
+    --   command = "pint",
+    -- }),
+    formatting.phpcsfixer,
     formatting.prettierd,
     formatting.prismaFmt,
     formatting.stylua,
@@ -44,7 +45,6 @@ null_ls.setup({
 
 local root_files = {
   'nx.json',
-  'tsconfig.base.json',
 }
 
 local fallback_root_files = {
@@ -57,14 +57,25 @@ local function tsserver_root_dir(fname)
   -- local is_covr_repo = string.find(fname, "covr-2.0")
   local primary = lspconfig_utils.root_pattern(unpack(root_files))(fname)
   local fallback = lspconfig_utils.root_pattern(unpack(fallback_root_files))(fname)
-  local git_dir = lspconfig_utils.find_git_ancestor(fname)
+  -- local git_dir = lspconfig_utils.find_git_ancestor(fname)
 
-  return git_dir or primary or fallback
+  return primary or fallback
 end
 
-lsp.configure("tsserver", {
-  root_dir = tsserver_root_dir
+lsp.configure("denols", {
+  root_dir = lspconfig_utils.root_pattern("deno.json", "deno.jsonc"),
+  single_file_support = false
 })
+
+lsp.configure("ts_ls", {
+  root_dir = tsserver_root_dir,
+  single_file_support = false
+})
+
+-- lsp.configure("tsserver", {
+--   root_dir = tsserver_root_dir,
+--   single_file_support = false
+-- })
 
 lsp.configure("eslint", {
   root_dir = tsserver_root_dir

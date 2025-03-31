@@ -1,0 +1,3 @@
+# !/bin/bash
+
+gh run list --status waiting --json databaseId | jq ".[] | [.databaseId] | @tsv" | xargs -L1 -I'{}' gh run cancel '{}'

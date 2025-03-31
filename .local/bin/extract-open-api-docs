@@ -1,0 +1,10 @@
+#!/bin/bash
+
+target_port=$1
+target_path=$2
+replacement_name=$3
+
+curl http://localhost:$target_port/swagger-json --silent -S | \
+  jq -r --arg target_path $target_path --arg name "$replacement_name" '. + { paths: .paths | with_entries( select( .key | contains($target_path) ) ), info: (.info + { title: $name }) } ' | \
+  pbcopy
+

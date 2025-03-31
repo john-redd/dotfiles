@@ -1,0 +1,115 @@
+#!/bin/bash
+
+current_dir=$(pwd)
+
+# Default variable values
+verbose_mode=false
+is_mobile_enabled=false
+env_command='ln -sF'
+
+# Function to display script usage
+usage() {
+ echo "Usage: $0 [OPTIONS]"
+ echo "Options:"
+ echo " -h, --help          Display this help message"
+ echo " -v, --verbose       Enable verbose mode"
+ echo " -m, --enable-mobile Setup work tree for mobile development"
+ echo " -c, --copy-env      Copy .env instead of creating symlink"
+}
+
+has_argument() {
+    [[ ("$1" == *=* && -n ${1#*=}) || ( ! -z "$2" && "$2" != -*)  ]];
+}
+
+extract_argument() {
+  echo "${2:-${1#*=}}"
+}
+
+# Function to handle options and arguments
+handle_options() {
+  while [ $# -gt 0 ]; do
+    case $1 in
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      -v | --verbose)
+        verbose_mode=true
+        ;;
+      -m | --enable-mobile*)
+        # Example of required arugment
+        # if ! has_argument $@; then
+        #   echo "File not specified." >&2
+        #   usage
+        #   exit 1
+        # fi
+        #
+        # output_file=$(extract_argument $@)
+        is_mobile_enabled=true
+        ;;
+      -c | --copy-env*)
+        env_command='cp'
+        ;;
+      *)
+        echo "Invalid option: $1" >&2
+        usage
+        exit 1
+        ;;
+    esac
+    shift
+  done
+}
+
+run_command() {
+  local cmd=$1
+
+  echo "  Task: $cmd"
+
+  if [[ "$verbose_mode" = true ]]; then
+    eval "$cmd"
+  else
+    if [[ $cmd == *"docker-compose"* ]]; then
+      # docker-compose prints to both stoud & stderr
+      eval "$cmd" &> /dev/null
+    else
+      eval "$cmd" > /dev/null
+    fi
+  fi
+
+  echo "    Complete"
+}
+
+# Main script execution
+handle_options "$@"
+
+# Perform the desired actions based on the provided flags and arguments
+if [[ "$verbose_mode" = true ]]; then
+ echo "Verbose mode enabled."
+fi
+
+echo "Setting up work tree in $current_dir"
+
+run_command "pnpm install --prefer-offline"
+
+run_command "$env_command ~/covr/covr-2.0.git/main/.env ./.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/apps/php/.env ./apps/php/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/apps/nursa-webhooks-ui/.env ./apps/nursa-webhooks-ui/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/apps/open-shifts-modal/.env ./apps/open-shifts-modal/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/apps/marketplace-service/.env ./apps/marketplace-service/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/apps/insights-service/.env ./apps/insights-service/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/apps/platform-service/.env ./apps/platform-service/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/apps/people-service/.env ./apps/people-service/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/services/auth/api/.env ./services/auth/api/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/services/schedule/api/.env ./services/schedule/api/.env"
+run_command "$env_command ~/covr/covr-2.0.git/main/services/api-gateway-proxy/.env ./services/api-gateway-proxy/.env"
+
+run_command "docker container stop localstack_main"
+run_command "docker container rm localstack_main"
+run_command "docker-compose up -d"
+
+if [ "$is_mobile_enabled" = true ]; then
+ echo "Setting up mobile in $current_dir"
+
+ run_command "pnpm nx ensure-symlink mobile"
+ run_command "pnpm nx pod-install mobile"
+fi

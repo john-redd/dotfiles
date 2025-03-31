@@ -1,0 +1,6 @@
+#!/bin/bash
+
+expression=$1
+
+
+fd . --type f --print0 | LC_CTYPE=C  xargs -0 gsed -i -z -E "$expression"

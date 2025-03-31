@@ -1,0 +1,12 @@
+# !/bin/bash
+
+service_post_fix=$1
+
+git tag \
+| rg $service_post_fix \
+| sort \
+| tail -1 \
+| cut -d '-' -f 1 \
+| awk '{split($0,a,"."); a[3] += 1; print a[1]"."a[2]"."a[3]}' \
+| xargs -I {} echo "{}-$service_post_fix" \
+| xargs -I {} git tag {}

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+colima ssh -- df -h /usr/local

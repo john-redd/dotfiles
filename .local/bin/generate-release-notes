@@ -1,0 +1,34 @@
+#!/bin/bash
+
+latest_build_tag="latest-build"
+commit_format="%s by %aN <%aE>%n%b%n%n***%n%n"
+target="$latest_build_tag..HEAD"
+clickup_ticket_number_format="dev(-|\s*)[0-9]{3,}"
+clickup_base_url="https://app.clickup.com/t/14246021/"
+coauthor_divider="---------"
+
+git fetch --all --tags -f > /dev/null
+
+new_version=$(git tag --points-at $latest_build_tag | grep $latest_build_tag --invert-match | awk -F. '{ new_patch_version=$3+1; print $1 "." $2 "." new_patch_version }')
+
+printf "# $new_version\n\n"
+
+printf "## ClickUp Tickets\n\n"
+
+git --no-pager log $target --pretty=format:"$commit_format" -- . ':!apps/mobile/**' ':!libs/mobile-ui/**' \
+  | rg -i -o -e "$clickup_ticket_number_format" \
+  | sed 's/[[:space:]]/-/g' \
+  | awk -v clickup_base_url="$clickup_base_url" '{ print "- [" toupper($1) "](" clickup_base_url toupper($1) ")" }' \
+  | uniq
+
+printf "\n\n## Commits \n\n"
+
+git --no-pager log $target --pretty=format:"$commit_format" -- . ':!apps/mobile/**' ':!libs/mobile-ui/**' | gsed "s/$coauthor_divider//g"
+
+printf "\n\n## TcnData Migrations \n\n"
+
+git --no-pager diff $target --diff-filter A -- migrations/tcndata/*-up.sql
+
+printf "\n\n## TcnStats Migrations \n\n"
+
+git --no-pager diff $target --diff-filter A -- migrations/tcnstats/*-up.sql

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tmux list-windows -a -F "#S,#W,#{?#{e|>:#{window_panes},1},yes,no}" | rg 'yes'

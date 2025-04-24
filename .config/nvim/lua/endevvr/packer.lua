@@ -98,15 +98,10 @@ return require("packer").startup(function(use)
   use("theHamsta/nvim-dap-virtual-text")
   use("leoluz/nvim-dap-go")
   use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
-  use({
-    "microsoft/vscode-js-debug",
-    opt = true,
-    run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
-  })
 
   -- GoLang
   use({ 'ray-x/go.nvim' })
-  use({ 'ray-x/guihua.lua' })
+  use({ 'ray-x/guihua.lua', run = 'cd lua/fzy && make' })
 
   -- Utility
   use("folke/todo-comments.nvim")

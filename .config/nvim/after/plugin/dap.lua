@@ -131,7 +131,6 @@ if dap_ok then
     callback(delve_config)
   end
 
-
   dap.configurations.go = {
     {
       name = "Launch cmd",
@@ -165,21 +164,25 @@ if dap_ok then
       buildFlags = "",
       outputMode = "remote",
     },
-{
-        name = "Debug test",
-        type = "go",
-        request = "launch",
-        mode = "test",
-        port = 38697,
-        host = "127.0.0.1",
-        program = "${file}",
-        outputMode = "remote",
-        args = function()
-          local test_name = get_hovered_word()
-          vim.fn.input("Test to debug > ", test_name)
-          return { "-test.run", test_name }
-        end,
-      }
+    {
+      name = "Debug test",
+      type = "go",
+      request = "launch",
+      mode = "test",
+      port = 38697,
+      host = "127.0.0.1",
+      program = "${workspaceFolder}/${relativeFileDirname}",
+      env = {},
+      args = function()
+        local test_name = get_hovered_word()
+        vim.fn.input("Test to debug > ", test_name)
+        return { "-test.run", test_name }
+      end,
+      cwd = "${workspaceFolder}",
+      envFile = "${workspaceFolder}/.env",
+      buildFlags = "",
+      outputMode = "remote",
+    }
     -- {
     --   name = "Attach main",
     --   type = "go",
@@ -311,7 +314,7 @@ if dap_ok then
     function()
       require('dap.ui.widgets').preview()
     end,
-    { desc = "[d]ebugger [p]review",silent = true, remap = false }
+    { desc = "[d]ebugger [p]review", silent = true, remap = false }
   )
 
   -- Eval var under cursor

@@ -23,22 +23,22 @@ if go_ok then
     -- false: do nothing
     -- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
     -- lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
-    lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+    lsp_gofumpt = true,  -- true: set default gofmt in gopls format to gofumpt
     -- false: do not set default gofmt in gopls format to gofumpt
     lsp_on_attach = nil, -- nil: use on_attach function defined in go/lsp.lua,
     --      when lsp_cfg is true
     -- if lsp_on_attach is a function: use this function as on_attach function for gopls
-    lsp_keymaps = true, -- set to false to disable gopls/lsp keymap
+    lsp_keymaps = true,  -- set to false to disable gopls/lsp keymap
     lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
     -- function(bufnr)
     --    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", {noremap=true, silent=true})
     -- end
     -- to setup a table of codelens
-    null_ls = {                                                                -- set to false to disable null-ls setup
+    null_ls = {                                                                    -- set to false to disable null-ls setup
       golangci_lint = {
         method = { "NULL_LS_DIAGNOSTICS_ON_SAVE", "NULL_LS_DIAGNOSTICS_ON_OPEN" }, -- when it should run
         -- disable = {'errcheck', 'staticcheck'}, -- linters to disable empty by default
-        -- enable = {'govet', 'ineffassign','revive', 'gosimple'}, -- linters to enable; empty by default
+        enable = {'govet', 'ineffassign','revive', 'gosimple'}, -- linters to enable; empty by default
         severity = vim.diagnostic.severity.INFO, -- severity level of the diagnostics
       },
     },
@@ -90,31 +90,31 @@ if go_ok then
       -- The color of the hints
       highlight = "Comment",
     },
-    gopls_cmd = nil,        -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
+    gopls_cmd = nil,          -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
     gopls_remote_auto = true, -- add -remote=auto to gopls
     gocoverage_sign = "█",
-    sign_priority = 5,      -- change to a higher number to override other signs
-    dap_debug = true,       -- set to false to disable dap
-    dap_debug_keymap = false, -- true: use keymap for debugger defined in go/dap.lua
+    sign_priority = 5,        -- change to a higher number to override other signs
+    dap_debug = false,         -- set to false to disable dap
+    dap_debug_keymap = false,  -- true: use keymap for debugger defined in go/dap.lua
     -- false: do not use keymap in go/dap.lua.  you must define your own.
     -- Windows: Use Visual Studio keymap
-    dap_debug_gui = {},                                                          -- bool|table put your dap-ui setup here set to false to disable
-    dap_debug_vt = { enabled = true, enabled_commands = true, all_frames = true }, -- bool|table put your dap-virtual-text setup here set to false to disable
+    dap_debug_gui = false,                                                            -- bool|table put your dap-ui setup here set to false to disable
+    -- dap_debug_vt = { enabled = true, enabled_commands = true, all_frames = true }, -- bool|table put your dap-virtual-text setup here set to false to disable
+    dap_debug_vt = false, -- bool|table put your dap-virtual-text setup here set to false to disable
 
-    dap_port = 38697,                                                            -- can be set to a number, if set to -1 go.nvim will pick up a random port
-    dap_timeout = 15,                                                            --  see dap option initialize_timeout_sec = 15,
-    dap_retries = 20,                                                            -- see dap option max_retries
-    build_tags = "tag1,tag2",                                                    -- set default build tags
-    textobjects = true,                                                          -- enable default text objects through treesittter-text-objects
-    test_runner = 'go',                                                          -- one of {`go`,  `dlv`, `ginkgo`, `gotestsum`}
-    verbose_tests = true,                                                        -- set to add verbose flag to tests deprecated, see '-v' option
-    run_in_floaterm = false,                                                     -- set to true to run in a float window. :GoTermClose closes the floatterm
+    dap_port = 38697,                                                              -- can be set to a number, if set to -1 go.nvim will pick up a random port
+    dap_timeout = 15,                                                              --  see dap option initialize_timeout_sec = 15,
+    dap_retries = 20,                                                              -- see dap option max_retries
+    build_tags = "tag1,tag2", -- set default build tags
+    textobjects = true,       -- enable default text objects through treesittter-text-objects
+    test_runner = 'go',       -- one of {`go`,  `dlv`, `ginkgo`, `gotestsum`}
+    verbose_tests = true,     -- set to add verbose flag to tests deprecated, see '-v' option
+    run_in_floaterm = false,  -- set to true to run in a float window. :GoTermClose closes the floatterm
     -- float term recommend if you use gotestsum ginkgo with terminal color
-
-    floaterm = {           -- position
-      posititon = 'auto',  -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
-      width = 0.45,        -- width of float window if not auto
-      height = 0.98,       -- height of float window if not auto
+    floaterm = {             -- position
+      posititon = 'auto',    -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
+      width = 0.45,          -- width of float window if not auto
+      height = 0.98,         -- height of float window if not auto
       title_colors = 'nord', -- default to nord, one of {'nord', 'tokyo', 'dracula', 'rainbow', 'solarized ', 'monokai'}
       -- can also set to a list of colors to define colors to choose from
       -- e.g {'#D8DEE9', '#5E81AC', '#88C0D0', '#EBCB8B', '#A3BE8C', '#B48EAD'}

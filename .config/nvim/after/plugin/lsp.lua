@@ -3,7 +3,6 @@ local lsp = require("lsp-zero")
 lsp.preset("recommended")
 
 lsp.ensure_installed({
-  -- "tsserver",
   "lua_ls",
   "rust_analyzer",
   "gopls",
@@ -11,37 +10,6 @@ lsp.ensure_installed({
 })
 
 local lspconfig_utils = require('lspconfig.util')
-
-local null_ls = require("null-ls")
-local null_opts = lsp.build_options("null-ls", {
-  -- on_attach = function(client, bufnr)
-  --   ---
-  --   -- this function is optional
-  --   ---
-  -- end
-})
-
-local formatting = null_ls.builtins.formatting
-
-null_ls.setup({
-  on_attach = null_opts.on_attach,
-  sources = {
-    formatting.gofmt,
-    formatting.goimports,
-    -- formatting.pint.with({
-    --   command = "pint",
-    -- }),
-    formatting.phpcsfixer,
-    formatting.prettierd,
-    formatting.prismaFmt,
-    formatting.stylua,
-
-    -- code_actions.eslint_d,
-    -- code_actions.refactoring,
-
-    -- diagnostics.eslint_d,
-  },
-})
 
 local root_files = {
   'nx.json',
@@ -54,28 +22,22 @@ local fallback_root_files = {
 }
 
 local function tsserver_root_dir(fname)
-  -- local is_covr_repo = string.find(fname, "covr-2.0")
   local primary = lspconfig_utils.root_pattern(unpack(root_files))(fname)
   local fallback = lspconfig_utils.root_pattern(unpack(fallback_root_files))(fname)
-  -- local git_dir = lspconfig_utils.find_git_ancestor(fname)
 
   return primary or fallback
 end
 
 lsp.configure("denols", {
   root_dir = lspconfig_utils.root_pattern("deno.json", "deno.jsonc"),
-  single_file_support = false
+  single_file_support = true,
+  autostart = false
 })
 
 lsp.configure("ts_ls", {
   root_dir = tsserver_root_dir,
   single_file_support = false
 })
-
--- lsp.configure("tsserver", {
---   root_dir = tsserver_root_dir,
---   single_file_support = false
--- })
 
 lsp.configure("eslint", {
   root_dir = tsserver_root_dir
@@ -140,47 +102,6 @@ lsp.configure("jsonls", {
   },
 })
 
--- lsp.configure("helm-ls", {
---   logLevel = "info",
---   valuesFiles = {
---     mainValuesFile = "values.yaml",
---     lintOverlayValuesFile = "values.lint.yaml",
---     additionalValuesFilesGlobPattern = "values*.yaml"
---   },
---   yamlls = {
---     enabled = true,
---     -- diagnosticsLimit = 50,
---     -- showDiagnosticsDirectly = false,
---     path = "yaml-language-server",
---     -- config = {
---     --   schemas = {
---     --     kubernetes = "templates/**",
---     --   },
---     --   completion = true,
---     --   hover = true,
---     --   -- any other config from https://github.com/redhat-developer/yaml-language-server#language-server-settings
---     --   cmd = { "yaml-language-server", "--stdio" },
---     --   filetypes = { "yaml", "yaml.docker-compose" },
---     --   settings = {
---     --     redhat = {
---     --       telemetry = {
---     --         enabled = false
---     --       }
---     --     },
---     --     yaml = {
---     --       keyOrdering = false,
---     --       schemaStore = { enable = true },
---     --       schemas = {
---     --         ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*"
---     --       },
---     --     }
---     --   }
---     --
---     -- }
---   }
--- })
--- lsp.configure("yamlls")
-
 lsp.configure("yamlls", {
   cmd = { "yaml-language-server", "--stdio" },
   filetypes = { "yaml", "yaml.docker-compose" },
@@ -199,14 +120,6 @@ lsp.configure("yamlls", {
     }
   }
 })
--- lsp.yamlls.setup({
---   settings = {
---     yaml = {
---       keyOrdering = false,
---       schemaStore = { enable = true },
---     }
---   }
--- })
 
 lsp.configure("prettier", {
   bin = "prettier",
@@ -257,14 +170,6 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     end
   end, { "i", "s" }),
 })
-
--- cmp.event:on("menu_opened", function()
---   vim.b.copilot_suggestion_hidden = true
--- end)
---
--- cmp.event:on("menu_closed", function()
---   vim.b.copilot_suggestion_hidden = false
--- end)
 
 lsp.setup_nvim_cmp({
   sources = cmp.config.sources({

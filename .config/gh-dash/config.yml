@@ -4,8 +4,11 @@ prSections:
     layout:
       author:
         hidden: true
-        # width: <number of columns>
-        # grow: <bool> this will make the column grow in size
+  - title: My Recent Merged Pull Requests
+    filters: is:merged author:@me
+    layout:
+      author:
+        hidden: true
   - title: Needs My Review
     filters: is:open review-requested:@me
   # - title: Subscribed

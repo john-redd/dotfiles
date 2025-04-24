@@ -154,17 +154,144 @@ if go_ok then
   })
 end
 
+-- TODO: Set this in a config somewhere in the file system.
+--
+-- local config_path = vim.fn.stdpath("config")
+-- local data_path = vim.fn.stdpath("data")
+-- local user_config = string.format("%s/harpoon.json", config_path)
+-- local cache_config = string.format("%s/harpoon.json", data_path)
+-- function M.save()
+--     -- first refresh from disk everything but our project
+--     M.refresh_projects_b4update()
+--
+--     log.trace("save(): Saving cache config to", cache_config)
+--     Path:new(cache_config):write(vim.fn.json_encode(HarpoonConfig), "w")
+-- end
+--
+-- local function read_config(local_config)
+--     log.trace("_read_config():", local_config)
+--     return vim.json.decode(Path:new(local_config):read())
+-- end
+--
+-- -- 1. saved.  Where do we save?
+-- function M.setup(config)
+--     log.trace("setup(): Setting up...")
+--
+--     if not config then
+--         config = {}
+--     end
+--
+--     local ok, u_config = pcall(read_config, user_config)
+--
+--     if not ok then
+--         log.debug("setup(): No user config present at", user_config)
+--         u_config = {}
+--     end
+--
+--     local ok2, c_config = pcall(read_config, cache_config)
+--
+--     if not ok2 then
+--         log.debug("setup(): No cache config present at", cache_config)
+--         c_config = {}
+--     end
+--
+--     local complete_config = merge_tables({
+--         projects = {},
+--         global_settings = {
+--             ["save_on_toggle"] = false,
+--             ["save_on_change"] = true,
+--             ["enter_on_sendcmd"] = false,
+--             ["tmux_autoclose_windows"] = false,
+--             ["excluded_filetypes"] = { "harpoon" },
+--             ["mark_branch"] = false,
+--             ["tabline"] = false,
+--             ["tabline_suffix"] = "   ",
+--             ["tabline_prefix"] = "   ",
+--         },
+--     }, expand_dir(c_config), expand_dir(u_config), expand_dir(config))
+--
+--     -- There was this issue where the vim.loop.cwd() didn't have marks or term, but had
+--     -- an object for vim.loop.cwd()
+--     ensure_correct_config(complete_config)
+--
+--     if complete_config.tabline then
+--         require("harpoon.tabline").setup(complete_config)
+--     end
+--
+--     HarpoonConfig = complete_config
+--
+--     log.debug("setup(): Complete config", HarpoonConfig)
+--     log.trace("setup(): log_key", Dev.get_log_key())
+-- end
+-- refresh all projects from disk, except our current one
+-- function M.refresh_projects_b4update()
+--     log.trace(
+--         "refresh_projects_b4update(): refreshing other projects",
+--         cache_config
+--     )
+--     -- save current runtime version of our project config for merging back in later
+--     local cwd = mark_config_key()
+--     local current_p_config = {
+--         projects = {
+--             [cwd] = ensure_correct_config(HarpoonConfig).projects[cwd],
+--         },
+--     }
+--
+--     -- erase all projects from global config, will be loaded back from disk
+--     HarpoonConfig.projects = nil
+--
+--     -- this reads a stale version of our project but up-to-date versions
+--     -- of all other projects
+--     local ok2, c_config = pcall(read_config, cache_config)
+--
+--     if not ok2 then
+--         log.debug(
+--             "refresh_projects_b4update(): No cache config present at",
+--             cache_config
+--         )
+--         c_config = { projects = {} }
+--     end
+--     -- don't override non-project config in HarpoonConfig later
+--     c_config = { projects = c_config.projects }
+--
+--     -- erase our own project, will be merged in from current_p_config later
+--     c_config.projects[cwd] = nil
+--
+--     local complete_config = merge_tables(
+--         HarpoonConfig,
+--         expand_dir(c_config),
+--         expand_dir(current_p_config)
+--     )
+--
+--     -- There was this issue where the vim.loop.cwd() didn't have marks or term, but had
+--     -- an object for vim.loop.cwd()
+--     ensure_correct_config(complete_config)
+--
+--     HarpoonConfig = complete_config
+--     log.debug("refresh_projects_b4update(): Complete config", HarpoonConfig)
+--     log.trace("refresh_projects_b4update(): log_key", Dev.get_log_key())
+-- end
 local tmux_pane_id = ""
 local default_run_cmd = 'dotenvx run -- go run cmd/main.go'
 
 vim.keymap.set(
   'n',
-  '<leader>gr',
+  '<leader>gR',
   function()
     local list = vim.api.nvim_command("!tmux list-panes")
     print(list)
     tmux_pane_id = vim.fn.input("Select Pane > ", tmux_pane_id)
     default_run_cmd = vim.fn.input("Run > ", default_run_cmd)
+    local full_cmd = "silent !tmux send -t \\" .. tmux_pane_id .. " '" .. default_run_cmd .. "' Enter"
+    vim.api.nvim_command(full_cmd)
+  end,
+  { desc = '[d]ebug [t]est', silent = true, remap = false }
+)
+
+vim.keymap.set(
+  'n',
+  '<leader>gr',
+  function()
     local full_cmd = "silent !tmux send -t \\" .. tmux_pane_id .. " '" .. default_run_cmd .. "' Enter"
     vim.api.nvim_command(full_cmd)
   end,

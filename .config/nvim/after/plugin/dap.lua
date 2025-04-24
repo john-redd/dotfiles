@@ -1,4 +1,25 @@
 local dap_ok, dap = pcall(require, "dap")
+local dapui_ok, dapui = pcall(require, "dapui")
+
+
+local function get_hovered_word()
+  local word
+  local visual = vim.fn.mode() == "v"
+
+  if visual == true then
+    local saved_reg = vim.fn.getreg "v"
+    vim.cmd [[noautocmd sil norm! "vy]]
+    local sele = vim.fn.getreg "v"
+    vim.fn.setreg("v", saved_reg)
+    word = vim.F.if_nil(nil, sele)
+  else
+    word = vim.F.if_nil(nil, vim.fn.expand "<cword>")
+  end
+
+  word = tostring(word)
+
+  return word
+end
 
 if dap_ok then
   dap.adapters.codelldb = {
@@ -20,64 +41,332 @@ if dap_ok then
     },
   }
 
-  -- dap.adapters.delve = {
-  --   type = 'server',
-  --   port = '${port}',
-  --   executable = {
-  --     command = 'dlv',
-  --     args = { 'dap', '-l', '127.0.0.1:${port}' },
-  --     -- add this if on windows, otherwise server won't open successfully
-  --     -- detached = false
-  --   }
-  -- }
 
-  -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
-  -- dap.configurations.go = {
-  --   {
-  --     type = "delve",
-  --     name = "Debug",
-  --     request = "launch",
-  --     program = "${file}"
-  --   },
-  --   {
-  --     type = "delve",
-  --     name = "Debug test", -- configuration for debugging test files
-  --     request = "launch",
-  --     mode = "test",
-  --     program = "${file}"
-  --   },
-  --   -- works with go.mod packages and sub packages
-  --   {
-  --     type = "delve",
-  --     name = "Debug test (go.mod)",
-  --     request = "launch",
-  --     mode = "test",
-  --     program = "./${relativeFileDirname}"
-  --   }
-  -- }
+  local enrich_config = function(finalConfig, on_config)
+    local final_config = vim.deepcopy(finalConfig)
 
-  -- vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
-  -- vim.keymap.set("n", "<leader>dc", dap.continue)
-  --
-  vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
-  vim.keymap.set("n", "<leader>gb", dap.run_to_cursor)
+    -- Placeholder expansion for launch directives
+    local placeholders = {
+      ["${file}"] = function(_)
+        return vim.fn.expand("%:p")
+      end,
+      ["${fileBasename}"] = function(_)
+        return vim.fn.expand("%:t")
+      end,
+      ["${fileBasenameNoExtension}"] = function(_)
+        return vim.fn.fnamemodify(vim.fn.expand("%:t"), ":r")
+      end,
+      ["${fileDirname}"] = function(_)
+        return vim.fn.expand("%:p:h")
+      end,
+      ["${fileExtname}"] = function(_)
+        return vim.fn.expand("%:e")
+      end,
+      ["${relativeFile}"] = function(_)
+        return vim.fn.expand("%:.")
+      end,
+      ["${relativeFileDirname}"] = function(_)
+        return vim.fn.fnamemodify(vim.fn.expand("%:.:h"), ":r")
+      end,
+      ["${workspaceFolder}"] = function(_)
+        return vim.fn.getcwd()
+      end,
+      ["${workspaceFolderBasename}"] = function(_)
+        return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+      end,
+      ["${env:([%w_]+)}"] = function(match)
+        return os.getenv(match) or ""
+      end,
+    }
 
-  vim.keymap.set("n", "<F2>", dap.continue)
-  vim.keymap.set("n", "<F3>", dap.step_into)
-  vim.keymap.set("n", "<F4>", dap.step_over)
-  vim.keymap.set("n", "<F5>", dap.step_out)
-  vim.keymap.set("n", "<F6>", dap.step_back)
-  vim.keymap.set("n", "<F1>", dap.restart)
+    if final_config.envFile then
+      local filePath = final_config.envFile
+      for key, fn in pairs(placeholders) do
+        filePath = filePath:gsub(key, fn)
+      end
 
-  local dapui_ok, dapui = pcall(require, "dapui")
+      for line in io.lines(filePath) do
+        local words = {}
+        for word in string.gmatch(line, "[^=]+") do
+          table.insert(words, word)
+        end
+        if not final_config.env then
+          final_config.env = {}
+        end
+        final_config.env[words[1]] = words[2]
+      end
+    end
+
+    on_config(final_config)
+  end
+
+  dap.adapters.go = function(callback, client_config)
+    local delve_config = {
+      type = 'server',
+      port = 38697,
+      executable = {
+        command = 'dlv',
+        args = { 'dap', '-l', '127.0.0.1:38697' },
+        detached = vim.fn.has("win32") == 0,
+      },
+      options = {
+        initialize_timeout_sec = 20
+      },
+      enrich_config = enrich_config
+    }
+    if client_config.port == nil then
+      callback(delve_config)
+      return
+    end
+
+    local host = client_config.host
+    if host == nil then
+      host = "127.0.0.1"
+    end
+
+    local listener_addr = host .. ":" .. client_config.port
+    delve_config.port = client_config.port
+    delve_config.executable.args = { "dap", "-l", listener_addr }
+
+    callback(delve_config)
+  end
+
+
+  dap.configurations.go = {
+    {
+      name = "Launch cmd",
+      type = "go",
+      request = "launch",
+      mode = "debug",
+      remotePath = "",
+      port = 38697,
+      host = "127.0.0.1",
+      program = "${workspaceFolder}/cmd",
+      env = {},
+      args = {},
+      cwd = "${workspaceFolder}",
+      envFile = "${workspaceFolder}/.env",
+      buildFlags = "",
+      outputMode = "remote"
+    },
+    {
+      name = "Launch file",
+      type = "go",
+      request = "launch",
+      mode = "debug",
+      remotePath = "",
+      port = 38697,
+      host = "127.0.0.1",
+      program = "${file}",
+      env = {},
+      args = {},
+      cwd = "${workspaceFolder}",
+      envFile = "${workspaceFolder}/.env",
+      buildFlags = "",
+      outputMode = "remote",
+    },
+{
+        name = "Debug test",
+        type = "go",
+        request = "launch",
+        mode = "test",
+        port = 38697,
+        host = "127.0.0.1",
+        program = "${file}",
+        outputMode = "remote",
+        args = function()
+          local test_name = get_hovered_word()
+          vim.fn.input("Test to debug > ", test_name)
+          return { "-test.run", test_name }
+        end,
+      }
+    -- {
+    --   name = "Attach main",
+    --   type = "go",
+    --   request = "attach",
+    --   mode = "debug",
+    --   remotePath = "",
+    --   port = 38697,
+    --   host = "127.0.0.1",
+    --   program = "${workspaceFolder}/main.go",
+    --   env = {},
+    --   args = {},
+    --   cwd = "${workspaceFolder}",
+    --   processId = "",
+    --   envFile = "${workspaceFolder}/.env",
+    --   buildFlags = ""
+    -- },
+    -- {
+    --   name = "Attach to Process",
+    --   type = "go",
+    --   request = "attach",
+    --   mode = "local",
+    --   host = "127.0.0.1",
+    --   port = 38697,
+    --   processId = 0
+    -- },
+  }
+
+  vim.keymap.set(
+    { 'n', 'v' },
+    '<leader>dt',
+    function()
+      local config = {
+        name = "Debug test",
+        type = "go",
+        request = "launch",
+        mode = "test",
+        port = 38697,
+        host = "127.0.0.1",
+        program = "${file}",
+        args = {
+          "-test.run",
+          "{placeholder}"
+        },
+        outputMode = "remote"
+      }
+      local word = get_hovered_word()
+      local test = vim.fn.input("Test to debug > ", word)
+      config.args[2] = test
+      require('dap').run(config)
+    end,
+    { desc = '[d]ebug [t]est', silent = true, remap = false }
+  )
+  vim.keymap.set(
+    "n",
+    "<leader>b",
+    dap.toggle_breakpoint,
+    { desc = '[b]reakpoint', silent = true, remap = false }
+  )
+  vim.keymap.set(
+    { 'n', 'v' },
+    '<leader>dsp',
+    function()
+      local word = get_hovered_word()
+      local condition = vim.fn.input('Condition: ', word)
+      local message = vim.fn.input('Message: ')
+      if message == '' then
+        message = nil
+      end
+      require('dap').set_breakpoint(condition, nil, message)
+    end,
+    { desc = '[d]ebugger [s]uper [p]oint', silent = true, remap = false }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>dlp',
+    function()
+      require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
+    end,
+    { desc = '[d]ebugger [l]og [p]oint', silent = true, remap = false }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>dep',
+    function()
+      require 'dap'.set_exception_breakpoints("default")
+    end,
+    { desc = '[d]ebugger [e]xception [p]oint', silent = true, remap = false }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>dr',
+    function() require('dap').repl.open() end,
+    { desc = '[d]ebugger [r]epl', silent = true, remap = false }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>drl',
+    function()
+      require('dap').run_last()
+    end,
+    { desc = '[d]ebugger [r]un [l]ast', silent = true, remap = false }
+  )
+
+  vim.keymap.set(
+    'n',
+    '<leader>du',
+    function() dapui.toggle() end,
+    { desc = '[d]ebugger [u]i', silent = true, remap = false }
+  )
+  vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "[d]ebugger [c]ontinue", silent = true, remap = false })
+  vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "[d]ebugger step [i]nto", silent = true, remap = false })
+  vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "[d]ebugger step [o]ver", silent = true, remap = false })
+  vim.keymap.set("n", "<leader>dO", dap.step_out, { desc = "[d]ebugger step [O]ut", silent = true, remap = false })
+  vim.keymap.set("n", "<leader>dB", dap.step_back, { desc = "[d]ebugger step [B]ack", silent = true, remap = false })
+  vim.keymap.set("n", "<leader>drs", dap.restart, { desc = "[d]ebugger [r]e[s]tart", silent = true, remap = false })
+  vim.keymap.set(
+    "n",
+    "<leader>dv",
+    function()
+      local widgets = require('dap.ui.widgets')
+      local sidebar = widgets.sidebar(widgets.scopes)
+      sidebar.open()
+    end,
+    { desc = "[d]ebugger [v]ariables", silent = true, remap = false }
+  )
+  vim.keymap.set(
+    { 'n', 'v' },
+    '<Leader>dp',
+    function()
+      require('dap.ui.widgets').preview()
+    end,
+    { desc = "[d]ebugger [p]review",silent = true, remap = false }
+  )
+
+  -- Eval var under cursor
+  vim.keymap.set(
+    "n",
+    "<leader>?",
+    function()
+      dapui.eval(nil, { enter = true })
+    end,
+    { desc = "eval under cursor", silent = true, remap = false }
+  )
 
   if dapui_ok then
-    dapui.setup()
+    dapui.setup(
+      {
+        layouts = { {
+          elements = {
+            {
+              id = "scopes",
+              size = 0.25
+            },
+            {
+              id = "breakpoints",
+              size = 0.25
+            },
+            {
+              id = "stacks",
+              size = 0.25
+            },
+            {
+              id = "watches",
+              size = 0.25
+            }
+          },
+          position = "left",
+          size = 40
+        },
+          {
+            elements = {
+              {
+                id = "repl",
+                size = 0.75
+              },
+              {
+                id = "console",
+                size = 0.25
+              }
+            },
+            position = "bottom",
+            size = 30
+          }
+        },
+      }
+    )
 
-    -- Eval var under cursor
-    vim.keymap.set("n", "<leader>?", function()
-      dapui.eval(nil, { enter = true })
-    end)
 
     dap.listeners.before.attach.dapui_config = function()
       dapui.open()
@@ -92,12 +381,6 @@ if dap_ok then
       dapui.close()
     end
   end
-
-  -- local dap_go_ok, dap_go = pcall(require, "dap-go")
-  --
-  -- if dap_go_ok then
-  --   dap_go.setup()
-  -- end
 
   local dap_vscode_js_ok, dap_vscode_js = pcall(require, "dap-vscode-js")
 
@@ -241,4 +524,18 @@ if dap_ok then
       -- end,
     }
   end
+
+  local repl = require 'dap.repl'
+  repl.commands = vim.tbl_extend('force', repl.commands, {
+
+    -- Add a new alias for existing commands
+    exit = { 'exit', '.exit' },
+
+    -- Add new commands
+    custom_commands = {
+      ['.print'] = function(v)
+        repl.execute(v)
+      end,
+    },
+  })
 end

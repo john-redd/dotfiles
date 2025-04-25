@@ -180,6 +180,10 @@ lsp.setup_nvim_cmp({
     { name = "luasnip" },
     { name = "buffer" },
     { name = "path" },
+    {
+      name = "lazydev",
+      group_index = 0,
+    }
   }, { { name = "buffer", keyword_length = 3 } }),
   mapping = cmp_mappings,
 })

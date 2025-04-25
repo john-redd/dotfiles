@@ -91,6 +91,7 @@ return require("packer").startup(function(use)
     },
   })
   use('towolf/vim-helm')
+  use({"folke/lazydev.nvim"})
 
   -- DAP
   use({ "mfussenegger/nvim-dap" })

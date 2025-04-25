@@ -1,7 +1,6 @@
 local dap_ok, dap = pcall(require, "dap")
 local dapui_ok, dapui = pcall(require, "dapui")
 
-
 local function get_hovered_word()
   local word
   local visual = vim.fn.mode() == "v"

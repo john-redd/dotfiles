@@ -6,6 +6,8 @@ require("gruvbox").setup({
   contrast = "soft",
 })
 
+vim.api.nvim_set_hl(0, "@character.printf", { link = "@function" })
+
 function ColorMyPencils(color)
   color = color or "kanagawa"
   local overrides = nil
@@ -39,7 +41,7 @@ function ColorMyPencils(color)
 
     vim.g.gruvbox_baby_color_overrides = { comment = "#918881" }
     vim.g.gruvbox_baby_highlights = {
-      ["@tag.delimiter"] = { fg = "#458588", bg = "NONE", style="bold" },
+      ["@tag.delimiter"] = { fg = "#458588", bg = "NONE", style = "bold" },
       ["LineNr"] = { fg = "#e7d7ad", bg = "NONE" },
       -- hi ColorColumn ctermbg=lightgrey guibg=lightgrey
       ["ColorColumn"] = { fg = "NONE", bg = "#4a4541" }
@@ -47,7 +49,7 @@ function ColorMyPencils(color)
 
     -- Required to get variables highlighted in rust
     --
-    overrides = function ()
+    overrides = function()
       vim.cmd([[
       highlight! link @variable.rust TSVariable
       ]])

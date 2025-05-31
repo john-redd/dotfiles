@@ -1,9 +1,9 @@
 ;; extends
 
-(string_content) @injection.content
+((string_content) @injection.content
 (#set! injection.language "html")
 (#set! injection.include-children)
-(#lua-match? @injection.content "^%s*</?%a*[%s*]?.*>")
+(#lua-match? @injection.content "^%s*</?%a*[%s*]?.*>"))
 
 ([
   (string_content)

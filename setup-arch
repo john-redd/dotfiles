@@ -1,18 +1,20 @@
-#!/usr/local/env bash
+#!/usr/bin/env bash
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+sudo pacman -S --noconfirm man less ripgrep fd fzf jq stow
 
-git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-sudo pacman -S swaync waybar greetd tuigreet xdg-desktop-portal-hyprland hyprpolkitagent yazi
-
-sudo pacman -S ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick
-
-sudo pacman -S fastfetch
-
-sudo pacman -S rustup
-yay -S resvg
-
-network-manager-applet
+# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# 
+# git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+# 
+# sudo pacman -S swaync waybar greetd tuigreet xdg-desktop-portal-hyprland hyprpolkitagent yazi
+# 
+# sudo pacman -S ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick
+# 
+# sudo pacman -S fastfetch
+# 
+# sudo pacman -S rustup
+# yay -S resvg
+# 
+# network-manager-applet
 
 # clipse

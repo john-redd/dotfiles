@@ -1,24 +1,57 @@
 #!/usr/bin/env bash
 
-sudo pacman -S --noconfirm man less ripgrep fd fzf jq stow
+# Note: These should be installed before boot otherwise they won't be available and there won't be anyway to connect to the internet.
+sudo pacman -S --noconfirm networkmanager network-manager-applet
+
+# General Utilities
+sudo pacman -S --noconfirm man less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit
 
 sudo pacman -S --noconfirm github-cli
 
 sudo pacman -S --noconfirm wl-clipboard wl-clip-persist
 
-# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-# 
-# git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-# 
-# sudo pacman -S swaync waybar greetd tuigreet xdg-desktop-portal-hyprland hyprpolkitagent yazi
-# 
-# sudo pacman -S ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick
-# 
-# sudo pacman -S fastfetch
-# 
-# sudo pacman -S rustup
-# yay -S resvg
-# 
-# network-manager-applet
+sudo pacman -S --noconfirm waybar
 
-# clipse
+sudo pacman -S --noconfirm swaync
+
+sudo pacman -S --noconfirm xdg-desktop-portal-hyprland 
+
+sudo pacman -S --noconfirm hyprpolkitagent
+
+sudo pacman -S --noconfirm fastfetch
+
+# Yazi & deps
+sudo pacman -S --noconfirm yazi ffmpeg 7zip jq poppler zoxide imagemagick
+
+# Install Paru Start
+sudo pacman -S --noconfirm base-devel rustup
+sudo pacman -S --noconfirm rustup
+rustup default stable
+git clone https://aur.archlinux.org/paru.git ~/paru
+cd ~/paru
+makepkg -si
+cd ~/dotfiles
+# Install Paru Start
+
+paru -S --noconfirm clipse
+
+# Yazi dep
+paru -S resvg
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+# Login Manager Start
+sudo pacman -S --noconfirm greetd
+sudo pacman -S --noconfirm greetd-tuigreet
+
+# NOTE: Need to run manually
+# sudo systemctl disable sddm
+# sudo systemctl enable greetd
+# sudo systemctl start greetd
+# sudo systemctl stop sddm
+# sudo pacman -R sddm
+# Login Manager End
+
+sudo pacman -R kitty dolphin

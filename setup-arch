@@ -4,7 +4,7 @@
 sudo pacman -S --noconfirm networkmanager network-manager-applet
 
 # General Utilities
-sudo pacman -S --noconfirm man less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit
+sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta
 
 sudo pacman -S --noconfirm github-cli
 
@@ -12,9 +12,11 @@ sudo pacman -S --noconfirm wl-clipboard wl-clip-persist
 
 sudo pacman -S --noconfirm waybar
 
+sudo pacman -S --noconfirm bluez bluez-utils bluetui
+
 sudo pacman -S --noconfirm swaync
 
-sudo pacman -S --noconfirm xdg-desktop-portal-hyprland 
+sudo pacman -S --noconfirm xdg-desktop-portal-hyprland
 
 sudo pacman -S --noconfirm hyprpolkitagent
 

@@ -1,205 +1,24 @@
-local lsp = require("lsp-zero")
-
-lsp.preset("recommended")
-
-lsp.ensure_installed({
-  "lua_ls",
-  "rust_analyzer",
-  "gopls",
-  "tailwindcss",
-})
-
-local lspconfig_utils = require('lspconfig.util')
-
-local root_files = {
-  'nx.json',
-}
-
-local fallback_root_files = {
-  'package.json',
-  'tsconfig.json',
-  'jsconfig.json',
-}
-
-local function tsserver_root_dir(fname)
-  local primary = lspconfig_utils.root_pattern(unpack(root_files))(fname)
-  local fallback = lspconfig_utils.root_pattern(unpack(fallback_root_files))(fname)
-
-  return primary or fallback
-end
-
-lsp.configure("denols", {
-  root_dir = lspconfig_utils.root_pattern("deno.json", "deno.jsonc"),
-  single_file_support = true,
-  autostart = false
-})
-
-lsp.configure("ts_ls", {
-  root_dir = tsserver_root_dir,
-  single_file_support = false
-})
-
-lsp.configure("eslint", {
-  root_dir = tsserver_root_dir
-})
-
-lsp.configure("tailwindcss", {
-  filetypes = { "rust", "html", "javascript", "javascriptreact", "typescript", "typescriptreact", "templ" }
-})
-
--- Fix Undefined global 'vim'
-lsp.configure("lua_ls", {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim" },
-      },
-    },
+require("mason").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = {
+    "lua_ls",
+    "rust_analyzer",
+    "gopls",
+    "tailwindcss",
   },
-})
-
-lsp.configure("jsonls", {
-  cmd = { "vscode-json-language-server", "--stdio" },
-  filetypes = { "json", "jsonc" },
-  settings = {
-    json = {
-      -- Schemas https://www.schemastore.org
-      schemas = {
-        {
-          fileMatch = { "package.json" },
-          url = "https://json.schemastore.org/package.json",
-        },
-        {
-          fileMatch = { "manifest.json", "manifest.webmanifest" },
-          url = "https://json.schemastore.org/web-manifest-combined.json",
-        },
-        {
-          fileMatch = { "tsconfig*.json" },
-          url = "https://json.schemastore.org/tsconfig.json",
-        },
-        {
-          fileMatch = {
-            ".prettierrc",
-            ".prettierrc.json",
-            "prettier.config.json",
-          },
-          url = "https://json.schemastore.org/prettierrc.json",
-        },
-        {
-          fileMatch = { ".eslintrc", ".eslintrc.json" },
-          url = "https://json.schemastore.org/eslintrc.json",
-        },
-        {
-          fileMatch = { ".babelrc", ".babelrc.json", "babel.config.json" },
-          url = "https://json.schemastore.org/babelrc.json",
-        },
-        {
-          fileMatch = { "now.json", "vercel.json" },
-          url = "https://json.schemastore.org/now.json",
-        },
-      },
-    },
-  },
-})
-
-lsp.configure("yamlls", {
-  cmd = { "yaml-language-server", "--stdio" },
-  filetypes = { "yaml", "yaml.docker-compose" },
-  settings = {
-    redhat = {
-      telemetry = {
-        enabled = false
-      }
-    },
-    yaml = {
-      keyOrdering = false,
-      schemaStore = { enable = true },
-      schemas = {
-        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*"
-      },
+  automatic_enable = {
+    exclude = {
+      "denols"
     }
   }
+}
+)
+
+vim.diagnostic.config({
+  virtual_text = true,
 })
 
-lsp.configure("prettier", {
-  bin = "prettier",
-  filetypes = {
-    "css",
-    "graphql",
-    "html",
-    "javascript",
-    "javascriptreact",
-    "json",
-    "less",
-    "markdown",
-    "scss",
-    "typescript",
-    "typescriptreact",
-    "yaml",
-  },
-})
-
-local luasnip = require("luasnip")
-local cmp = require("cmp")
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-  ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-  ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-  ["<C-Space>"] = cmp.mapping.complete(),
-  ["<CR>"] = cmp.mapping.confirm({
-    behavior = cmp.ConfirmBehavior.Replace,
-    select = true,
-  }),
-  ["<Tab>"] = cmp.mapping(function(fallback)
-    if cmp.visible() then
-      cmp.select_next_item()
-    elseif luasnip.expand_or_jumpable() then
-      luasnip.expand_or_jump()
-    else
-      fallback()
-    end
-  end, { "i", "s" }),
-  ["<S-Tab>"] = cmp.mapping(function(fallback)
-    if cmp.visible() then
-      cmp.select_prev_item()
-    elseif luasnip.jumpable(-1) then
-      luasnip.jump(-1)
-    else
-      fallback()
-    end
-  end, { "i", "s" }),
-})
-
-lsp.setup_nvim_cmp({
-  sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-    { name = "nvim_lsp_signature_help" },
-    { name = "nvim_lua" },
-    { name = "vim-dadbod-completion" },
-    { name = "luasnip" },
-    { name = "buffer" },
-    { name = "path" },
-    {
-      name = "lazydev",
-      group_index = 0,
-    }
-  }, { { name = "buffer", keyword_length = 3 } }),
-  mapping = cmp_mappings,
-})
-
-lsp.set_preferences({
-  suggest_lsp_servers = false,
-  sign_icons = {
-    error = "E",
-    warn = "W",
-    hint = "H",
-    info = "I",
-  },
-})
-
----@diagnostic disable-next-line: unused-local
-lsp.on_attach(function(client, bufnr)
+local function on_attach(client, bufnr)
   local nmap = function(keys, func, desc)
     if desc then
       desc = "LSP: " .. desc
@@ -230,6 +49,7 @@ lsp.on_attach(function(client, bufnr)
   nmap("<leader>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, "[W]orkspace [L]ist Folders")
+  nmap("gl", vim.diagnostic.open_float, "Open Diagnostic")
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
@@ -239,10 +59,9 @@ lsp.on_attach(function(client, bufnr)
       vim.lsp.buf.formatting()
     end
   end, { desc = "Format current buffer with LSP" })
-end)
+end
 
-lsp.setup()
-
-vim.diagnostic.config({
-  virtual_text = true,
+vim.lsp.config('*', {
+  on_attach = on_attach,
 })
+

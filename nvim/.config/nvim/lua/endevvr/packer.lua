@@ -66,32 +66,16 @@ return require("packer").startup(function(use)
   use("numToStr/Comment.nvim")
 
   -- LSP
-  use({
-    "VonHeikemen/lsp-zero.nvim",
+  use({ "neovim/nvim-lspconfig" })
+  use({ "williamboman/mason.nvim" })
+  use({ "williamboman/mason-lspconfig.nvim" })
+
+  -- Autocompletion
+  use({ 'saghen/blink.cmp' }, {
     requires = {
-      -- LSP Support
-      { "neovim/nvim-lspconfig" },
-      { "williamboman/mason.nvim" },
-      { "williamboman/mason-lspconfig.nvim" },
-
-      -- Formatters
-      { "jose-elias-alvarez/null-ls.nvim" },
-
-      -- Autocompletion
-      { "hrsh7th/nvim-cmp" },
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-path" },
-      { "saadparwaiz1/cmp_luasnip" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-nvim-lua" },
-
-      -- Snippets
-      { "L3MON4D3/LuaSnip" },
-      { "rafamadriz/friendly-snippets" },
-    },
+      dependencies = { 'rafamadriz/friendly-snippets' }
+    }
   })
-  use('towolf/vim-helm')
-  use({"folke/lazydev.nvim"})
 
   -- DAP
   use({ "mfussenegger/nvim-dap" })

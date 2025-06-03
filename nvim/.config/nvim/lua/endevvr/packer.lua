@@ -34,10 +34,6 @@ return require("packer").startup(function(use)
   use("folke/tokyonight.nvim")
   use("ellisonleao/gruvbox.nvim")
   use("tanvirtin/monokai.nvim")
-  use({
-    "rose-pine/neovim",
-    as = "rose-pine",
-  })
   use("rebelot/kanagawa.nvim")
 
   -- use({

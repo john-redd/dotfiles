@@ -34,13 +34,11 @@ if go_ok then
     --    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", {noremap=true, silent=true})
     -- end
     -- to setup a table of codelens
-    null_ls = {                                                                    -- set to false to disable null-ls setup
-      golangci_lint = {
-        method = { "NULL_LS_DIAGNOSTICS_ON_SAVE", "NULL_LS_DIAGNOSTICS_ON_OPEN" }, -- when it should run
-        -- disable = {'errcheck', 'staticcheck'}, -- linters to disable empty by default
-        enable = { 'govet', 'ineffassign', 'revive', 'gosimple' },                 -- linters to enable; empty by default
-        severity = vim.diagnostic.severity.INFO,                                   -- severity level of the diagnostics
-      },
+    golangci_lint = {
+      method = { "NULL_LS_DIAGNOSTICS_ON_SAVE", "NULL_LS_DIAGNOSTICS_ON_OPEN" }, -- when it should run
+      -- disable = {'errcheck', 'staticcheck'}, -- linters to disable empty by default
+      enable = { 'govet', 'ineffassign', 'revive', 'gosimple' },                 -- linters to enable; empty by default
+      severity = vim.diagnostic.severity.INFO,                                   -- severity level of the diagnostics
     },
     diagnostic = { -- set diagnostic to false to disable vim.diagnostic.config setup,
       -- true: default nvim setup

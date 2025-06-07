@@ -34,6 +34,8 @@ sudo pacman -S --noconfirm ttf-meslo-nerd
 
 sudo pacman -S --noconfirm ttf-font-awesome ttf-jetbrains-mono-nerd
 
+curl https://mise.run | sh
+
 # Yazi & deps
 sudo pacman -S --noconfirm yazi ffmpeg 7zip jq poppler zoxide imagemagick
 

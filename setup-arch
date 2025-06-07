@@ -4,7 +4,7 @@
 sudo pacman -S --noconfirm networkmanager network-manager-applet
 
 # General Utilities
-sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta
+sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta libnotify
 
 sudo pacman -S --noconfirm github-cli
 
@@ -20,6 +20,10 @@ sudo pacman -S --noconfirm xdg-desktop-portal-hyprland
 
 sudo pacman -S --noconfirm hyprpolkitagent
 
+sudo pacman -S --noconfirm hypridle
+
+sudo pacman -S --noconfirm hyprlock
+
 sudo pacman -S --noconfirm fastfetch
 
 sudo pacman -S --noconfirm brightnessctl
@@ -28,7 +32,7 @@ sudo pacman -S --noconfirm pavucontrol
 
 sudo pacman -S --noconfirm ttf-meslo-nerd
 
-sudo pacman -S --noconfirm ttf-font-awesome
+sudo pacman -S --noconfirm ttf-font-awesome ttf-jetbrains-mono-nerd
 
 # Yazi & deps
 sudo pacman -S --noconfirm yazi ffmpeg 7zip jq poppler zoxide imagemagick

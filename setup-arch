@@ -22,6 +22,14 @@ sudo pacman -S --noconfirm hyprpolkitagent
 
 sudo pacman -S --noconfirm fastfetch
 
+sudo pacman -S --noconfirm brightnessctl
+
+sudo pacman -S --noconfirm pavucontrol
+
+sudo pacman -S --noconfirm ttf-meslo-nerd
+
+sudo pacman -S --noconfirm ttf-font-awesome
+
 # Yazi & deps
 sudo pacman -S --noconfirm yazi ffmpeg 7zip jq poppler zoxide imagemagick
 

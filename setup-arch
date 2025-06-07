@@ -24,6 +24,8 @@ sudo pacman -S --noconfirm hypridle
 
 sudo pacman -S --noconfirm hyprlock
 
+sudo pacman -S --noconfirm hyprpaper
+
 sudo pacman -S --noconfirm fastfetch
 
 sudo pacman -S --noconfirm brightnessctl

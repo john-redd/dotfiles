@@ -4,7 +4,7 @@
 sudo pacman -S --noconfirm networkmanager network-manager-applet
 
 # General Utilities
-sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta libnotify
+sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta libnotify atuin openssl openssl-1.1
 
 sudo pacman -S --noconfirm github-cli
 
@@ -34,7 +34,11 @@ sudo pacman -S --noconfirm pavucontrol
 
 sudo pacman -S --noconfirm ttf-meslo-nerd
 
+sudo pacman -S --noconfirm ttf-liberation-mono-nerd
+
 sudo pacman -S --noconfirm ttf-font-awesome ttf-jetbrains-mono-nerd
+
+sudo pacman -S --noconfirm nordvpn-bin
 
 curl https://mise.run | sh
 
@@ -55,6 +59,8 @@ paru -S --noconfirm clipse
 
 # Yazi dep
 paru -S resvg
+
+paru -S spotify-tui
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 

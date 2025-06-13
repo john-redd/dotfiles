@@ -69,6 +69,7 @@ function ColorMyPencils(color)
   if overrides ~= nil then
     overrides()
   end
+  vim.cmd("hi! Normal guibg=NONE ctermbg=NONE")
 end
 
 ColorMyPencils()

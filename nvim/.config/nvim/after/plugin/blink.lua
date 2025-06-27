@@ -29,17 +29,23 @@ if blink_ok then
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { "lazydev", 'lsp', 'path', 'snippets', 'buffer' },
         per_filetype = {
           sql = { 'dadbod' },
-          ['dap-repl'] = {'dap'}
+          ['dap-repl'] = { 'dap' }
         },
         providers = {
           dadbod = { module = "vim_dadbod_completion.blink" },
           dap = {
             name = 'dap',
             module = 'blink.compat.source',
-          }
+          },
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
+          },
         }
       },
 

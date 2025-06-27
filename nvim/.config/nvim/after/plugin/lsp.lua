@@ -17,7 +17,6 @@ require("mason-lspconfig").setup({
 local ale_fix_file_types = {}
 
 for filetype, fixers in pairs(vim.g.ale_fixers) do
-  vim.print(filetype)
   for _index, value in ipairs(fixers) do
     if value == 'prettier' then
       table.insert(ale_fix_file_types, filetype)
@@ -26,8 +25,6 @@ for filetype, fixers in pairs(vim.g.ale_fixers) do
     ::continue::
   end
 end
-
-vim.print(ale_fix_file_types)
 
 local function has_value(haystack, needle)
   for _index, value in ipairs(haystack) do

@@ -28,3 +28,6 @@ fi
 alias n=nvim
 
 eval "$(atuin init zsh)"
+
+# Needs to be run to make qutebrowser the default browser for xdg
+# BROWSER=""; xdg-settings set default-web-browser org.qutebrowser.qutebrowser.desktop

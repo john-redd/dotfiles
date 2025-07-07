@@ -1,5 +1,6 @@
 packer_compiled.lua
 .config/polybar/gmail/*
 home/.local/bin/mise
+home/.local/bin/bw
 migratenanny
 deep-work.sh

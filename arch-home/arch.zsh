@@ -25,4 +25,6 @@ if [[ "$TERM_PROGRAM" != "tmux" ]] then
   source ~/.cache/wal/colors.sh
 fi
 
+alias n=nvim
+
 eval "$(atuin init zsh)"

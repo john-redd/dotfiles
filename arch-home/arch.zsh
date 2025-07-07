@@ -13,14 +13,16 @@ append_path '/home/john/.local/bin'
 
 eval "$(/home/john/.local/bin/mise activate zsh)"
 
-# Import colorscheme from 'wal' asynchronously
-# &   # Run the process in the background.
-# ( ) # Hide shell job control messages.
-# Not supported in the "fish" shell.
-(cat ~/.cache/wal/sequences &)
+if [[ "$TERM_PROGRAM" != "tmux" ]] then
+  # Import colorscheme from 'wal' asynchronously
+  # &   # Run the process in the background.
+  # ( ) # Hide shell job control messages.
+  # Not supported in the "fish" shell.
+  (cat ~/.cache/wal/sequences &)
 
-# To add support for TTYs this line can be optionally added.
-source ~/.cache/wal/colors-tty.sh
-source ~/.cache/wal/colors.sh
+  # To add support for TTYs this line can be optionally added.
+  source ~/.cache/wal/colors-tty.sh
+  source ~/.cache/wal/colors.sh
+fi
 
 eval "$(atuin init zsh)"

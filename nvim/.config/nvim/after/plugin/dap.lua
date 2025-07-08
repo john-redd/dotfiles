@@ -102,10 +102,10 @@ if dap_ok then
   dap.adapters.go = function(callback, client_config)
     local delve_config = {
       type = 'server',
-      port = 38697,
+      port = "${port}",
       executable = {
         command = 'dlv',
-        args = { 'dap', '-l', '127.0.0.1:38697' },
+        args = { 'dap', '-l', '127.0.0.1:${port}' },
         detached = vim.fn.has("win32") == 0,
       },
       options = {
@@ -118,12 +118,7 @@ if dap_ok then
       return
     end
 
-    local host = client_config.host
-    if host == nil then
-      host = "127.0.0.1"
-    end
-
-    local listener_addr = host .. ":" .. client_config.port
+    local listener_addr = client_config.host .. ":" .. client_config.port
     delve_config.port = client_config.port
     delve_config.executable.args = { "dap", "-l", listener_addr }
 
@@ -137,7 +132,8 @@ if dap_ok then
       request = "launch",
       mode = "debug",
       remotePath = "",
-      port = 38697,
+      -- port = "${port}",
+      -- port = 38697,
       host = "127.0.0.1",
       program = "${workspaceFolder}/cmd",
       env = {},

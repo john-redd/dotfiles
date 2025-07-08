@@ -177,22 +177,26 @@ if dap_ok then
       envFile = "${workspaceFolder}/.env",
       buildFlags = "",
       outputMode = "remote",
-    }
+    },
     -- {
     --   name = "Attach main",
     --   type = "go",
     --   request = "attach",
-    --   mode = "debug",
-    --   remotePath = "",
-    --   port = 38697,
-    --   host = "127.0.0.1",
-    --   program = "${workspaceFolder}/main.go",
+    --   mode = "remote",
+    --   -- remotePath = "",
+    --   -- port = 38697,
+    --   -- host = "127.0.0.1",
+    --   -- program = "${workspaceFolder}/main.go",
     --   env = {},
     --   args = {},
     --   cwd = "${workspaceFolder}",
-    --   processId = "",
+    --   -- processId = function()
+    --   --   require('dap.utils').pick_process({ filter = "dlv" })
+    --   --   return "21996"
+    --   -- end,
+    --   processId = "21996",
     --   envFile = "${workspaceFolder}/.env",
-    --   buildFlags = ""
+    --   -- buildFlags = ""
     -- },
     -- {
     --   name = "Attach to Process",

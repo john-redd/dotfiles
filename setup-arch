@@ -40,6 +40,10 @@ sudo pacman -S --noconfirm ttf-font-awesome ttf-jetbrains-mono-nerd
 
 sudo pacman -S --noconfirm nordvpn-bin
 
+sudo pacman -S --noconfirm dmidecode
+
+sudo pacman -S --noconfirm lshw
+
 curl https://mise.run | sh
 
 # Yazi & deps

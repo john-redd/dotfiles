@@ -13,7 +13,9 @@ append_path '/home/john/.local/bin'
 
 eval "$(/home/john/.local/bin/mise activate zsh)"
 
-if [[ "$TERM_PROGRAM" != "tmux" ]] then
+export ENABLE_WAL=false
+
+if [[ "$TERM_PROGRAM" != "tmux" && "$ENABLE_WAL" == "true" ]] then
   # Import colorscheme from 'wal' asynchronously
   # &   # Run the process in the background.
   # ( ) # Hide shell job control messages.

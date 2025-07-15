@@ -211,3 +211,5 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 #
 autoload bashcompinit && bashcompinit
 source $(brew --prefix)/etc/bash_completion.d/az
+
+export BACON_PREFS="/Users/johnredd/.config/bacon/prefs.toml"

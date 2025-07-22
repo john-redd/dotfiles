@@ -4,7 +4,7 @@
 sudo pacman -S --noconfirm networkmanager network-manager-applet
 
 # General Utilities
-sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta libnotify atuin openssl openssl-1.1 unzip
+sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta libnotify atuin openssl openssl-1.1 unzip xdg-utils pdfjs
 
 sudo pacman -S --noconfirm github-cli
 
@@ -43,6 +43,11 @@ sudo pacman -S --noconfirm nordvpn-bin
 sudo pacman -S --noconfirm dmidecode
 
 sudo pacman -S --noconfirm lshw
+
+sudo pacman -S --noconfirm calibre
+
+# Rust toolchain
+sudo pacman -S --noconfirm lld clang
 
 curl https://mise.run | sh
 

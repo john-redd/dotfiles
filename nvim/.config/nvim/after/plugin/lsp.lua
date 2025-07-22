@@ -12,8 +12,7 @@ require("mason-lspconfig").setup({
       "denols"
     }
   }
-}
-)
+})
 
 vim.diagnostic.config({
   virtual_text = true,

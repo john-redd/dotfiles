@@ -15,18 +15,6 @@ require("mason-lspconfig").setup({
 }
 )
 
-local ale_fix_file_types = {}
-
-for filetype, fixers in pairs(vim.g.ale_fixers) do
-  for _index, value in ipairs(fixers) do
-    if value == 'prettier' then
-      table.insert(ale_fix_file_types, filetype)
-      goto continue
-    end
-    ::continue::
-  end
-end
-
 vim.diagnostic.config({
   virtual_text = true,
 })

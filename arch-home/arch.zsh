@@ -10,6 +10,7 @@ append_path () {
 }
 
 append_path '/home/john/.local/bin'
+append_path '/home/john/.cargo/bin'
 
 eval "$(/home/john/.local/bin/mise activate zsh)"
 

@@ -21,26 +21,6 @@ local function get_hovered_word()
 end
 
 if dap_ok then
-  dap.adapters.codelldb = {
-    type = 'server',
-    host = '127.0.0.1',
-    port = 7000
-  }
-
-  dap.configurations.rust = {
-    {
-      name = "Launch file",
-      type = "codelldb",
-      request = "launch",
-      program = function()
-        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-      end,
-      cwd = '${workspaceFolder}',
-      stopOnEntry = false,
-    },
-  }
-
-
   local enrich_config = function(finalConfig, on_config)
     local final_config = vim.deepcopy(finalConfig)
 

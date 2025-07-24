@@ -3,7 +3,10 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/learn -mindepth 1 -maxdepth 3 -type d | fzf)
+    learn=$(find ~/learn -mindepth 1 -maxdepth 3 -type d)
+    projects=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
+    # covr=$(find ~/covr -mindepth 1 -maxdepth 1 -type d)
+    selected=$(printf "$learn$projects" | fzf)
 fi
 
 if [[ -z $selected ]]; then

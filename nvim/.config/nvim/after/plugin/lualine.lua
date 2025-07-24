@@ -15,6 +15,7 @@ if ok then
         { bg = default_status_colors.modified }, 'filename_status_modified', self.options),
     }
     if self.options.color == nil then self.options.color = '' end
+    self.path = 2
   end
 
   function custom_fname:update_status()
@@ -66,7 +67,7 @@ if ok then
     inactive_sections = {
       lualine_a = {},
       lualine_b = {},
-      lualine_c = { 'filename' },
+      lualine_c = { custom_fname },
       lualine_x = { 'location' },
       lualine_y = {},
       lualine_z = {}

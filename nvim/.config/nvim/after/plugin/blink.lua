@@ -32,14 +32,14 @@ if blink_ok then
         default = { "lazydev", 'lsp', 'path', 'snippets', 'buffer' },
         per_filetype = {
           sql = { 'dadbod' },
-          ['dap-repl'] = { 'dap' }
+          -- ['dap-repl'] = { 'dap' }
         },
         providers = {
           dadbod = { module = "vim_dadbod_completion.blink" },
-          dap = {
-            name = 'dap',
-            module = 'blink.compat.source',
-          },
+          -- dap = {
+          --   name = 'dap',
+          --   module = 'blink.compat.source',
+          -- },
           lazydev = {
             name = "LazyDev",
             module = "lazydev.integrations.blink",

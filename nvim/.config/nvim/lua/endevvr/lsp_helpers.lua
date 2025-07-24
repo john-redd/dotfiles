@@ -34,7 +34,6 @@ local function on_attach(client, bufnr)
   nmap("<leader>vd", vim.diagnostic.open_float, "Open Float ?")
 
   nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-  nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
   nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
   nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
@@ -43,7 +42,11 @@ local function on_attach(client, bufnr)
   nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
   -- See `:help K` for why this keymap
-  nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+  -- See after/ftplugin/rust.lua for where these are configured.
+  if vim.bo[bufnr].filetype ~= "rust" then
+    nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+    nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+  end
 
   -- Lesser used LSP functionality
   nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")

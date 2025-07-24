@@ -86,6 +86,10 @@ return require("packer").startup(function(use)
   use({ 'ray-x/go.nvim' })
   use({ 'ray-x/guihua.lua', run = 'cd lua/fzy && make' })
 
+  -- Rust
+  use({ 'mrcjkb/rustaceanvim' })
+  use({ 'saecki/crates.nvim' })
+
   -- Utility
   use("folke/todo-comments.nvim")
   use("folke/snacks.nvim")

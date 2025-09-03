@@ -8,7 +8,8 @@ require("mason-lspconfig").setup({
   },
   automatic_enable = {
     exclude = {
-      "denols"
+      "denols",
+      "rust_analyzer"
     }
   }
 })

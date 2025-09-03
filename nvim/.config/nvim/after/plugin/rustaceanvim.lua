@@ -18,8 +18,9 @@ vim.g.rustaceanvim = {
       ['rust-analyzer'] = {
         inlayHints = {
           typeHints = { enable = false },
-          parameterHints = { enable = true },
+          parameterHints = { enable = false },
           chainingHints = { enable = false },
+          closingBraceHints = { enable = false },
         },
         checkOnSave = {
           enable = true,
@@ -32,7 +33,6 @@ vim.g.rustaceanvim = {
             enable = false,
           },
         },
-
       },
     },
   },

@@ -45,7 +45,7 @@
             "tooltip-format-disconnected": "Error",
             "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
             "tooltip-format-ethernet": "{ifname} 🖧 ",
-            "on-click": "ghostty --title=nmtui --class=nmtui -e nmtui"
+            "on-click": "ghostty --title=impala --class=impala -e impala"
         },
         "bluetooth": {
             "format-on": "󰂯",

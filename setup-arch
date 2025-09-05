@@ -6,6 +6,8 @@ sudo pacman -S --noconfirm networkmanager network-manager-applet
 # General Utilities
 sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta libnotify atuin openssl openssl-1.1 unzip xdg-utils pdfjs lsof
 
+sudo pacman -S --noconfirm iwd impala
+
 sudo pacman -S --noconfirm zsh-autosuggestions zsh-syntax-highlighting
 
 sudo pacman -S --noconfirm github-cli

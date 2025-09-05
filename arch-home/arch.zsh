@@ -29,6 +29,8 @@ if [[ "$TERM_PROGRAM" != "tmux" && "$ENABLE_WAL" == "true" ]] then
 fi
 
 alias n=nvim
+alias lg=lazygit
+alias ldoc=lazydocker
 
 eval "$(atuin init zsh)"
 

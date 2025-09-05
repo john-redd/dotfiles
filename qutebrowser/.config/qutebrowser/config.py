@@ -517,7 +517,7 @@ config.load_autoconfig(True)
 ## `colors.webpage.darkmode.policy.images` to `never`.  - "With selective
 ## image inversion": qutebrowser default settings.
 ## Type: Bool
-c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.darkmode.enabled = False
 
 ## Which images to apply dark mode to.
 ## Type: String
@@ -1258,11 +1258,11 @@ c.content.pdfjs = True
 
 ## Font used in the completion categories.
 ## Type: Font
-# c.fonts.completion.category = 'bold default_size default_family'
+c.fonts.completion.category = 'bold 18pt default_family'
 
 ## Font used in the completion widget.
 ## Type: Font
-# c.fonts.completion.entry = 'default_size default_family'
+c.fonts.completion.entry = '18pt default_family'
 
 ## Font used for the context menu. If set to null, the Qt default is
 ## used.
@@ -1292,7 +1292,7 @@ c.fonts.default_size = '14pt'
 
 ## Font used for the hints.
 ## Type: Font
-# c.fonts.hints = 'bold default_size default_family'
+c.fonts.hints = 'bold 22pt default_family'
 
 ## Font used in the keyhint widget.
 ## Type: Font
@@ -1312,19 +1312,19 @@ c.fonts.default_size = '14pt'
 
 ## Font used for prompts.
 ## Type: Font
-# c.fonts.prompts = 'default_size sans-serif'
+c.fonts.prompts = '18pt sans-serif'
 
 ## Font used in the statusbar.
 ## Type: Font
-# c.fonts.statusbar = 'default_size default_family'
+c.fonts.statusbar = '18pt default_family'
 
 ## Font used for selected tabs.
 ## Type: Font
-# c.fonts.tabs.selected = 'default_size default_family'
+c.fonts.tabs.selected = '20pt default_family'
 
 ## Font used for unselected tabs.
 ## Type: Font
-# c.fonts.tabs.unselected = 'default_size default_family'
+c.fonts.tabs.unselected = '18pt default_family'
 
 ## Font used for tooltips. If set to null, the Qt default is used.
 ## Type: Font
@@ -2020,7 +2020,7 @@ c.fonts.default_size = '14pt'
 ##   - bottom
 ##   - left
 ##   - right
-# c.tabs.position = 'top'
+c.tabs.position = 'left'
 
 ## Which tab to select when the focused tab is removed.
 ## Type: SelectOnRemove
@@ -2099,7 +2099,7 @@ c.fonts.default_size = '14pt'
 ## Width (in pixels or as percentage of the window) of the tab bar if
 ## it's vertical.
 ## Type: PercOrInt
-# c.tabs.width = '15%'
+c.tabs.width = '10%'
 
 ## Wrap when changing tabs.
 ## Type: Bool
@@ -2267,10 +2267,10 @@ c.zoom.default = '125%'
 # config.bind('D', 'tab-close -o')
 # config.bind('F', 'hint all tab')
 # config.bind('G', 'scroll-to-perc')
-config.bind('H', 'tab-prev')
-config.bind('J', 'back')
-config.bind('K', 'forward')
-config.bind('L', 'tab-next')
+config.bind('H', 'back')
+config.bind('J', 'tab-next')
+config.bind('K', 'tab-prev')
+config.bind('L', 'forward')
 # config.bind('M', 'bookmark-add')
 # config.bind('N', 'search-prev')
 # config.bind('O', 'cmd-set-text -s :open -t')
@@ -2371,7 +2371,7 @@ config.bind('L', 'tab-next')
 # config.bind('wb', 'cmd-set-text -s :quickmark-load -w')
 # config.bind('wf', 'hint all window')
 # config.bind('wh', 'back -w')
-# config.bind('wi', 'devtools')
+config.bind('I', 'devtools bottom')
 # config.bind('wl', 'forward -w')
 # config.bind('wo', 'cmd-set-text -s :open -w')
 # config.bind('wp', 'open -w -- {clipboard}')

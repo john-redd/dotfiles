@@ -2185,7 +2185,7 @@ c.url.start_pages = ['https://kagi.com']
 
 ## Default zoom level.
 ## Type: Perc
-c.zoom.default = '125%'
+c.zoom.default = '100%'
 
 ## Available zoom levels.
 ## Type: List of Perc
@@ -2511,3 +2511,5 @@ config.bind('I', 'devtools bottom')
 # config.bind('Y', 'prompt-accept --save yes', mode='yesno')
 # config.bind('n', 'prompt-accept no', mode='yesno')
 # config.bind('y', 'prompt-accept yes', mode='yesno')
+
+config.bind('et', 'config-cycle tabs.show always never')

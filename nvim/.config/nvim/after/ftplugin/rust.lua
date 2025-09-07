@@ -1,5 +1,6 @@
 local bufnr = vim.api.nvim_get_current_buf()
-vim.highlight.priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
+vim.highlight.priorities.semantic_tokens = 100 -- Or any number lower than 100, treesitter's priority level
+vim.api.nvim_set_hl(0, "@lsp.type.string.rust", {})
 vim.keymap.set(
   "n",
   "<leader>ca",

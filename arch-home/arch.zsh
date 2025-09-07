@@ -31,6 +31,11 @@ fi
 alias n=nvim
 alias lg=lazygit
 alias ldoc=lazydocker
+alias open=xdg-open
+alias cat=bat
+
+export EDITOR=/usr/bin/nvim
+export VISUAL=/usr/bin/nvim
 
 eval "$(atuin init zsh)"
 

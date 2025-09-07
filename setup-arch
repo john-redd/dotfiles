@@ -8,6 +8,8 @@ sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser 
 
 sudo pacman -S --noconfirm iwd impala
 
+sudo pacman -S --noconfirm bat
+
 sudo pacman -S --noconfirm posgresql
 
 sudo pacman -S --noconfirm docker docker-buildx docker-compose
@@ -77,7 +79,7 @@ paru -S --noconfirm clipse
 # Yazi dep
 paru -S resvg
 
-paru -S spotify-tui
+paru -S spotify
 
 paru -S lazydocker
 

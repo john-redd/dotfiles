@@ -33,6 +33,7 @@ alias lg=lazygit
 alias ldoc=lazydocker
 alias open=xdg-open
 alias cat=bat
+alias hibernate="systemctl hibernate"
 
 export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim

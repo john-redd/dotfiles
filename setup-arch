@@ -8,6 +8,8 @@ sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser 
 
 sudo pacman -S --noconfirm iwd impala
 
+sudo pacman -S --noconfirm discord
+
 sudo pacman -S --noconfirm bat
 
 sudo pacman -S --noconfirm posgresql

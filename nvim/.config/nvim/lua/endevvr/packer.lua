@@ -106,7 +106,6 @@ return require("packer").startup(function(use)
     requires = {
       "nvim-tree/nvim-web-devicons",
     },
-    tag = "nightly",
   })
   use({
     'nvim-lualine/lualine.nvim',
@@ -128,4 +127,5 @@ return require("packer").startup(function(use)
   use('xiyaowong/nvim-transparent')
   use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
   use('christoomey/vim-tmux-navigator')
+  use("Canop/nvim-bacon")
 end)

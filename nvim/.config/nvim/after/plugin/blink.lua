@@ -31,7 +31,7 @@ if blink_ok then
       sources = {
         default = { "lazydev", 'lsp', 'path', 'snippets', 'buffer' },
         per_filetype = {
-          sql = { 'dadbod' },
+          sql = { 'dadbod', 'lsp', 'snippets', 'buffer' },
           -- ['dap-repl'] = { 'dap' }
         },
         providers = {

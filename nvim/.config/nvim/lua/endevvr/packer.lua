@@ -67,6 +67,7 @@ return require("packer").startup(function(use)
   use({ "williamboman/mason-lspconfig.nvim" })
   use({ "dense-analysis/ale" })
   use({ "folke/lazydev.nvim" })
+  use({ "nanotee/sqls.nvim" })
 
   -- Autocompletion
   use({ 'saghen/blink.cmp' }, {

@@ -2154,7 +2154,11 @@ c.tabs.width = '10%'
 ## the search engine name to the search term, e.g. `:open google
 ## qutebrowser`.
 ## Type: Dict
-c.url.searchengines = {'DEFAULT': 'https://kagi.com/search?q={}'}
+c.url.searchengines = {
+        'DEFAULT': 'https://kagi.com/search?q={}',
+        'crates': 'https://crates.io/search?q={}',
+        'docsrs': 'https://docs.rs/releases/search?query={}'
+    }
 
 ## Page(s) to open at the start.
 ## Type: List of FuzzyUrl, or FuzzyUrl

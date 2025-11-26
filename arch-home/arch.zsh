@@ -44,6 +44,8 @@ eval "$(atuin init zsh)"
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# TODO: Download this plugin
+# https://github.com/softmoth/zsh-vim-mode?tab=readme-ov-file#installation
 
 # Needs to be run to make qutebrowser the default browser for xdg
 # BROWSER=""; xdg-settings set default-web-browser org.qutebrowser.qutebrowser.desktop

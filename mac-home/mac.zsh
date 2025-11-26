@@ -82,12 +82,17 @@ DISABLE_MAGIC_FUNCTIONS=true
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 plugins=(
 	git
 	docker-compose
 	kubectl
   # asdf
   deno
+  zsh-vim-mode
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -125,9 +130,6 @@ source $ZSH/oh-my-zsh.sh
 # export COMPOSER_HOME="/home/johnredd/.config/composer/vendor/bin/"
 # export PATH="$COMPOSER_HOME:$PATH"
 # composer end
-
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export EDITOR='nvim'
 export VISUAL='nvim'
@@ -214,4 +216,3 @@ source $(brew --prefix)/etc/bash_completion.d/az
 
 export BACON_PREFS="/Users/johnredd/.config/bacon/prefs.toml"
 
-set -o vi

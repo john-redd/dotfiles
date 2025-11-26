@@ -38,6 +38,8 @@ alias hibernate="systemctl hibernate"
 export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim
 
+set -o vi
+
 eval "$(atuin init zsh)"
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

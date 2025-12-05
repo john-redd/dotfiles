@@ -20,18 +20,16 @@ alias ldoc=lazydocker
 alias open=xdg-open
 alias cat=bat
 alias hibernate="systemctl hibernate"
+alias ls="eza"
+alias cat="bat"
 
 export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim
 
-set -o vi
-
-eval "$(atuin init zsh)"
-
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-# TODO: Download this plugin
-# https://github.com/softmoth/zsh-vim-mode?tab=readme-ov-file#installation
+source ~/.zsh-plugins/zsh-vim-mode/zsh-vim-mode.plugin.zsh
 
+eval "$(atuin init zsh)"
 # Needs to be run to make qutebrowser the default browser for xdg
 # BROWSER=""; xdg-settings set default-web-browser org.qutebrowser.qutebrowser.desktop

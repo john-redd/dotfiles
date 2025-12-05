@@ -4,7 +4,7 @@
 sudo pacman -S --noconfirm networkmanager network-manager-applet
 
 # General Utilities
-sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser firefox starship lazygit git-delta libnotify atuin openssl openssl-1.1 unzip xdg-utils pdfjs lsof
+sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser starship lazygit git-delta libnotify atuin openssl openssl-1.1 unzip xdg-utils pdfjs lsof eza
 
 sudo pacman -S --noconfirm iwd impala
 
@@ -77,6 +77,8 @@ cd ~/dotfiles
 # Install Paru Start
 
 paru -S --noconfirm clipse
+
+paru -S --noconfirm brave-bin
 
 # Yazi dep
 paru -S resvg

@@ -1,3 +1,6 @@
 [tools]
 node = "24.1.0"
 npm = "11.4.1"
+
+[settings]
+idiomatic_version_file_enable_tools = []

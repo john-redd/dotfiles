@@ -2157,7 +2157,8 @@ c.tabs.width = '10%'
 c.url.searchengines = {
         'DEFAULT': 'https://kagi.com/search?q={}',
         'crates': 'https://crates.io/search?q={}',
-        'docsrs': 'https://docs.rs/releases/search?query={}'
+        'docsrs': 'https://docs.rs/releases/search?query={}',
+        'aur': 'https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=',
     }
 
 ## Page(s) to open at the start.

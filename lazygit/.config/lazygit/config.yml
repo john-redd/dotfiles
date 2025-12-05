@@ -1,18 +1,18 @@
 quitOnTopLevelReturn: true
 customCommands:
-    - key: 'O'
-      description: 'Copy file path to clipboard'
-      command: "echo '{{.SelectedFile.Name}}' | pbcopy"
-      context: 'files'
+  - key: 'O'
+    description: 'Copy file path to clipboard'
+    command: "echo '{{.SelectedFile.Name}}' | pbcopy"
+    context: 'files'
 keybinding:
-    universal:
-        quit: 'q'
-        quit-alt1: '<c-c>' # alternative/alias of quit
-        return: '<esc>'
-        return-alt1: <disabled>
+  universal:
+    quit: 'q'
+    quit-alt1: '<c-c>' # alternative/alias of quit
+    return: '<esc>'
+    return-alt1: <disabled>
 gui:
   mouseEvents: true
 git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"

@@ -488,6 +488,12 @@ if dap_ok then
           name = "Attach to Port 9229",
           port = 9229,
           cwd = "${workspaceFolder}",
+          sourceMaps = true,
+          outFiles = { "${workspaceFolder}/dist/**/*.js" },
+          skipFiles = {
+            "<node_internals>/**",
+            "**/node_modules/**"
+          },
         }
       }
     end

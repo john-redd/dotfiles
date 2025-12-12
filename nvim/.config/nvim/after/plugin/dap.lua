@@ -489,17 +489,9 @@ if dap_ok then
           port = 9229,
           cwd = "${workspaceFolder}",
           sourceMaps = true,
-          -- If you are debugging in a container, you must set localRoot and remoteRoot
-          -- localRoot = "${workspaceFolder}",
-          -- remoteRoot = "/usr/src/app",
-          outFiles = { "${workspaceFolder}/dist/**/*.js" },
           skipFiles = {
             "<node_internals>/**",
             "**/node_modules/**"
-          },
-          resolveSourceMapLocations = {
-            "${workspaceFolder}/**",
-            "!**/node_modules/**"
           },
         }
       }

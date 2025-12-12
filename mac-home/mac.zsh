@@ -216,3 +216,5 @@ source $(brew --prefix)/etc/bash_completion.d/az
 
 export BACON_PREFS="/Users/johnredd/.config/bacon/prefs.toml"
 
+# opencode
+export PATH=/Users/johnredd/.opencode/bin:$PATH

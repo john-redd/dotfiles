@@ -481,6 +481,26 @@ if dap_ok then
             "<node_internals>/**",
             "**/node_modules/**"
           },
+        },
+        {
+          type = "pwa-node",
+          request = "attach",
+          name = "Attach to Port 9229",
+          port = 9229,
+          cwd = "${workspaceFolder}",
+        }
+      }
+    end
+
+    local js_debug_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/vscode-js-debug/out/src/vsDebugServer.js"
+    if vim.fn.filereadable(js_debug_path) == 1 then
+      dap.adapters["pwa-node"] = {
+        type = "server",
+        host = "127.0.0.1",
+        port = "${port}",
+        executable = {
+          command = "node",
+          args = { js_debug_path, "${port}" },
         }
       }
     end

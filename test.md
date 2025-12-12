@@ -1,6 +1,6 @@
 ```mermaid
 architecture-beta
-    group api(cloud)[API]
+    group api(cloud)[API2]
 
     service db(database)[Database] in api
     service disk1(disk)[Storage] in api

@@ -129,4 +129,8 @@ return require("packer").startup(function(use)
   use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
   use('christoomey/vim-tmux-navigator')
   use("Canop/nvim-bacon")
+  use({"selimacerbas/mermaid-playground.nvim", requires = { "barrett-ruth/live-server.nvim" }})
+  -- Installed manually
+  -- use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+  -- use("3rd/diagram.nvim", requires = { "" })
 end)

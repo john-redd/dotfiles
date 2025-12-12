@@ -54,3 +54,4 @@ vim.g.tmux_navigator_no_wrap = 1
 
 vim.opt.grepprg = "rg --vimgrep --ignore --hidden"
 vim.opt.grepformat = "%f:%l:%c:%m"
+vim.opt.diffopt = "internal,algorithm:patience,filler,closeoff,linematch:60,vertical"

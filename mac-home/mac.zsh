@@ -154,7 +154,7 @@ export PATH="/Users/johnredd/.local/bin:$PATH"
 export PATH="/Users/johnredd/.fig/bin:$PATH"
 
 export MYVIMRC="$HOME/.config/nvim/init.lua"
-alias python=python3
+# alias python=python3
 
 # pnpm
 export PNPM_HOME="/Users/johnredd/Library/pnpm"

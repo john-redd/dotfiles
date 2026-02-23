@@ -2,7 +2,48 @@ local tree_sitter_ok, tree_sitter = pcall(require, "nvim-treesitter")
 
 if tree_sitter_ok then
   tree_sitter.setup()
-  tree_sitter.install({ "vimdoc", "javascript", "typescript", "c", "lua", "rust", "go" })
+
+  local ensure_installed = {
+    "bash",
+    "css",
+    "diff",
+    "go",
+    "gomod",
+    "gowork",
+    "gosum",
+    "html",
+    "javascript",
+    "jsdoc",
+    "json",
+    "lua",
+    "luadoc",
+    "markdown",
+    "markdown_inline",
+    "regex",
+    "toml",
+    "tsx",
+    "typescript",
+    "vim",
+    "vimdoc",
+    "yaml",
+    "rust",
+  }
+  -- install parsers from custom opts.ensure_installed
+  if ensure_installed and #ensure_installed > 0 then
+    tree_sitter.install(ensure_installed)
+    -- register and start parsers for filetypes
+    for _, parser in ipairs(ensure_installed) do
+      local filetypes = parser -- In this case, parser is the filetype/language name
+      vim.treesitter.language.register(parser, filetypes)
+
+      vim.api.nvim_create_autocmd({ "FileType" }, {
+        pattern = filetypes,
+        callback = function(event)
+          vim.treesitter.start(event.buf, parser)
+        end,
+      })
+    end
+  end
 end
 -- require 'nvim-treesitter.configs'.setup {
 --   -- A list of parser names, or "all"

@@ -66,6 +66,7 @@ return require("packer").startup(function(use)
   use({ "williamboman/mason-lspconfig.nvim" })
   use({ "folke/lazydev.nvim" })
   use({ "nanotee/sqls.nvim" })
+  use ({ "creativenull/efmls-configs-nvim" })
 
   -- Autocompletion
   use({ 'saghen/blink.cmp' }, {
@@ -84,7 +85,14 @@ return require("packer").startup(function(use)
     "microsoft/vscode-js-debug",
     opt = true,
     run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
+
   })
+
+  -- Formatter
+  -- use({ "stevearc/conform.nvim" }) alternative to efm
+
+  -- Linter
+  -- use({ 'mfussenegger/nvim-lint' }) alternative to efm
 
   -- GoLang
   use({ 'ray-x/go.nvim' })

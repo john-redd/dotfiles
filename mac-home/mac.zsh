@@ -27,6 +27,8 @@ alias lg="lazygit"
 alias ldoc="lazydocker"
 alias ls="eza"
 alias cat="bat"
+alias less="moor"
+alias diff="delta"
 
 eval "$($HOME/.local/bin/mise activate zsh)"
 eval "$(atuin init zsh)"

@@ -18,6 +18,8 @@ rust = "latest"
 "cargo:cargo-deps" = "latest"
 fzf = "latest"
 "cargo:tree-sitter-cli" = "latest"
+"cargo:git-delta" = "latest"
+"go:github.com/walles/moor/v2/cmd/moor" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

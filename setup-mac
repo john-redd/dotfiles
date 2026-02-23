@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+brew install bitwarden
+
+brew install --cask nikitabobko/tap/aerospace
+
+brew install stow
+
+brew install gh
+
+gh extension install dlvhdr/gh-dash
+
+brew install zsh-autosuggestions
+
+brew install zsh-syntax-highlighting
+
+brew install --cask ghostty
+
+brew install neovim
+
+brew install tmux
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+curl https://mise.run | sh

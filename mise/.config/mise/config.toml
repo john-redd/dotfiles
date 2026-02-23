@@ -16,6 +16,7 @@ rust = "latest"
 "cargo:cargo-workspaces" = "latest"
 "cargo:cargo-llvm-cov" = "latest"
 "cargo:cargo-deps" = "latest"
+fzf = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

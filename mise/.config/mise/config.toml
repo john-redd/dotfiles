@@ -1,6 +1,21 @@
 [tools]
 node = "24.1.0"
 npm = "11.4.1"
+go = "latest"
+rust = "latest"
+"cargo:eza" = "latest"
+"cargo:ripgrep" = "latest"
+"cargo:bat" = "latest"
+"go:github.com/jesseduffield/lazygit" = "latest"
+"go:github.com/jesseduffield/lazydocker" = "latest"
+"cargo:atuin" = "latest"
+"cargo:starship" = "latest"
+"cargo:bacon" = "latest"
+"cargo:cargo-nextest" = "latest"
+"cargo:cargo-watch" = "latest"
+"cargo:cargo-workspaces" = "latest"
+"cargo:cargo-llvm-cov" = "latest"
+"cargo:cargo-deps" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

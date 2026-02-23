@@ -1,4 +1,7 @@
-require("mermaid_playground").setup({
+local mermaid_ok, mermaid = pcall(require, "mermaid_playground")
+
+if mermaid_ok then
+  mermaid.setup({
       -- all optional; sane defaults shown
       workspace_dir = nil,                -- defaults to: $XDG_CONFIG_HOME/mermaid-playground
       index_name    = "index.html",
@@ -9,3 +12,4 @@ require("mermaid_playground").setup({
       debounce_ms   = 450,
       notify_on_refresh = false,
     })
+end

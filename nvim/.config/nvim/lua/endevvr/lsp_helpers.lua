@@ -1,15 +1,3 @@
-local ale_fix_file_types = {}
-
-for filetype, fixers in pairs(vim.g.ale_fixers) do
-  for _index, value in ipairs(fixers) do
-    if value == 'prettier' then
-      table.insert(ale_fix_file_types, filetype)
-      goto continue
-    end
-    ::continue::
-  end
-end
-
 local function has_value(haystack, needle)
   for _index, value in ipairs(haystack) do
     if value == needle then
@@ -58,9 +46,7 @@ local function on_attach(client, bufnr)
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-    if has_value(ale_fix_file_types, vim.bo[bufnr].filetype) then
-      vim.cmd 'ALEFix'
-    elseif vim.lsp.buf.format then
+    if vim.lsp.buf.format then
       vim.lsp.buf.format()
     elseif vim.lsp.buf.formatting then
       vim.lsp.buf.formatting()

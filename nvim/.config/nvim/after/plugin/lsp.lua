@@ -5,6 +5,10 @@ require("mason-lspconfig").setup({
     "lua_ls",
     "gopls",
     "tailwindcss",
+    "ts_ls",
+    "docker_compose_language_service",
+    "dockerls",
+    "html",
   },
   automatic_enable = {
     exclude = {
@@ -14,6 +18,12 @@ require("mason-lspconfig").setup({
   }
 })
 
+-- Install manually
+-- prettierd
+-- eslint_d
+-- codelldb
+-- delve
+
 vim.diagnostic.config({
   virtual_text = true,
 })
@@ -21,4 +31,3 @@ vim.diagnostic.config({
 vim.lsp.config('*', {
   on_attach = lsp_module.on_attach,
 })
-

@@ -22,7 +22,7 @@ return require("packer").startup(function(use)
   -- Telescope
   use({
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
+    -- tag = "0.1.8",
     requires = { { "nvim-lua/plenary.nvim" } },
   })
   use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make", cond = vim.fn.executable("make") == 1 })
@@ -45,7 +45,6 @@ return require("packer").startup(function(use)
 
   -- Treesitter
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-  use("nvim-treesitter/playground")
   use({
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
@@ -65,7 +64,6 @@ return require("packer").startup(function(use)
   use({ "neovim/nvim-lspconfig" })
   use({ "williamboman/mason.nvim" })
   use({ "williamboman/mason-lspconfig.nvim" })
-  use({ "dense-analysis/ale" })
   use({ "folke/lazydev.nvim" })
   use({ "nanotee/sqls.nvim" })
 
@@ -133,7 +131,7 @@ return require("packer").startup(function(use)
   use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
   use('christoomey/vim-tmux-navigator')
   use("Canop/nvim-bacon")
-  use({"selimacerbas/mermaid-playground.nvim", requires = { "barrett-ruth/live-server.nvim" }})
+  -- use({"selimacerbas/mermaid-playground.nvim", requires = { "barrett-ruth/live-server.nvim" }})
   -- Installed manually
   -- use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
   -- use("3rd/diagram.nvim", requires = { "" })

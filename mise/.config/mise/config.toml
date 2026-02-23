@@ -17,6 +17,7 @@ rust = "latest"
 "cargo:cargo-llvm-cov" = "latest"
 "cargo:cargo-deps" = "latest"
 fzf = "latest"
+"cargo:tree-sitter-cli" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

@@ -1,0 +1,11 @@
+#!/bin/bash
+echo "Running global pre-commit hook..."
+
+go_mod_replace_count=$(git diff --staged go.mod | rg 'replace' | wc -l)
+
+if (( $go_mod_replace_count > 0 )); then
+  echo "Error: Found staged go.mod with a replace statement. Aborting commit."
+  exit 1
+fi
+
+exit 0

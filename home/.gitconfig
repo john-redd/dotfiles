@@ -19,6 +19,7 @@
 
   ; fsmonitor = true
   untrackedCache = true
+  hooksPath = /Users/johnredd/.githooks
 [interactive]
   diffFilter = delta --color-only
 [delta]

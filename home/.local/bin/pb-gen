@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+path=$1
+
+protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./typescript $path
+protoc --go_out=./go $path

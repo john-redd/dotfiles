@@ -14,6 +14,7 @@ export CDPATH=".:..:$HOME/radial:$HOME"
 export MANPAGER="nvim --clean +Man!"
 # export GOPRIVATE='github.com/Radial-Health'
 export BACON_PREFS="$HOME/.config/bacon/prefs.toml"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 append_path "$HOME/.local/bin"
 append_path "$HOME/.opencode/bin"

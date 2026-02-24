@@ -20,6 +20,8 @@ fzf = "latest"
 "cargo:tree-sitter-cli" = "latest"
 "cargo:git-delta" = "latest"
 "go:github.com/walles/moor/v2/cmd/moor" = "latest"
+"go:google.golang.org/protobuf/cmd/protoc-gen-go" = "latest"
+"cargo:fd-find" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

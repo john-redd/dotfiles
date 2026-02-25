@@ -12,7 +12,7 @@ export VISUAL='nvim'
 export TERM=xterm-256color
 export CDPATH=".:..:$HOME/radial:$HOME"
 export MANPAGER="nvim --clean +Man!"
-# export GOPRIVATE='github.com/Radial-Health'
+export GOPRIVATE='github.com/Radial-Health'
 export BACON_PREFS="$HOME/.config/bacon/prefs.toml"
 export XDG_CONFIG_HOME="$HOME/.config"
 

@@ -31,3 +31,5 @@ sudo installer -pkg AWSCLIV2.pkg -target /
 
 curl "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-macos-arm64.pkg" -o "aws-sam-cli-macos-arm64.pkg"
 sudo installer -pkg aws-sam-cli-macos-arm64.pkg -target /
+
+brew install orbstack

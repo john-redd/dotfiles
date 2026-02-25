@@ -1,6 +1,9 @@
 local eslint = require("efmls-configs.linters.eslint_d")
 local prettier = require("efmls-configs.formatters.prettier_d")
 local cspell = require("efmls-configs.linters.cspell")
+local golines = require("efmls-configs.formatters.golines")
+local goimports = require("efmls-configs.formatters.goimports")
+local gofumpt = require("efmls-configs.formatters.gofumpt")
 
 local languages = require("efmls-configs.defaults").languages()
 languages = vim.tbl_extend("force", languages, {
@@ -10,25 +13,13 @@ languages = vim.tbl_extend("force", languages, {
 	javascriptreact = { eslint, prettier },
 	html = { prettier },
 	css = { prettier },
+	go = { golines, goimports, gofumpt },
 })
 
-local cspell_languages = {
-	"javascript",
-	"javascriptreact",
-	"typescript",
-	"typescriptreact",
-	"css",
-	"html",
-	"json",
-	"jsonc",
-	"yaml",
-	"markdown",
-}
-
-for _, pl in pairs(cspell_languages) do
-  if languages[pl] ~= nil then
-    languages[pl] = vim.tbl_extend("force", languages[pl], { cspell })
-  end
+for _, sources in pairs(languages) do
+	if type(sources) == "table" then
+		table.insert(sources, cspell)
+	end
 end
 
 local efmls_config = {

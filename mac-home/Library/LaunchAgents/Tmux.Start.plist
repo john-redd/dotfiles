@@ -6,7 +6,7 @@
 	    <string>Tmux</string>
 	    <key>ProgramArguments</key>
 	    <array>
-        <string>/Users/johnredd/dotfiles/.local/bin/start_tmux.sh</string>
+        <string>/Users/johnredd/.local/bin/start_tmux.sh</string>
 	    </array>
 	    <key>RunAtLoad</key>
 	    <true/>

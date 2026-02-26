@@ -51,10 +51,6 @@ local function on_attach(client, bufnr)
 
 	-- Create a command `:Format` local to the LSP buffer
 	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		if disable_formatting_set[client.name] ~= nil then
-			return
-		end
-
 		if vim.lsp.buf.format then
 			vim.lsp.buf.format()
 		elseif vim.lsp.buf.formatting then

@@ -56,3 +56,6 @@
   verbose = true
 [pull]
   rebase = true
+
+[includeIf "gitdir:~/radial/"]
+    path = ~/.gitconfig-radial

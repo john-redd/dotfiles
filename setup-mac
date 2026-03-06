@@ -11,6 +11,7 @@ brew install stow
 brew install gh
 
 gh extension install dlvhdr/gh-dash
+gh extension install dlvhdr/gh-enhance
 
 brew install zsh-autosuggestions
 
@@ -33,3 +34,5 @@ curl "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-ma
 sudo installer -pkg aws-sam-cli-macos-arm64.pkg -target /
 
 brew install orbstack
+
+brew install parallel

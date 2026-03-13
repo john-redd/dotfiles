@@ -3,7 +3,11 @@
     "language": "en",
     "words": [
         "DBUUID",
-        "heroui"
+        "heroui",
+        "UTMS",
+        "protoreflect",
+        "nolint",
+        "synctest"
     ],
     "flagWords": [
         "hte"

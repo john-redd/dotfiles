@@ -24,6 +24,8 @@ fzf = "latest"
 "cargo:fd-find" = "latest"
 "go:github.com/cweill/gotests/gotests" = "latest"
 "go:gotest.tools/gotestsum" = "latest"
+"github:anomalyco/opencode" = "latest"
+"go:github.com/control-theory/gonzo/cmd/gonzo" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

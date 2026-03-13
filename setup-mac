@@ -36,3 +36,7 @@ sudo installer -pkg aws-sam-cli-macos-arm64.pkg -target /
 brew install orbstack
 
 brew install parallel
+
+brew tap lucagrulla/tap
+brew install cw
+brew install gnu-sed

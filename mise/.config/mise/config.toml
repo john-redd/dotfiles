@@ -26,6 +26,8 @@ fzf = "latest"
 "go:gotest.tools/gotestsum" = "latest"
 "github:anomalyco/opencode" = "latest"
 "go:github.com/control-theory/gonzo/cmd/gonzo" = "latest"
+"npm:@openai/codex" = "latest"
+"npm:opencode-ai" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

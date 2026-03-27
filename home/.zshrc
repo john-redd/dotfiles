@@ -7,6 +7,15 @@ append_path () {
     esac
 }
 
+fpath=($HOME/.local/share/zsh/site-functions $fpath)
+
+autoload -Uz compinit
+compinit
+# autoload -Uz bashcompinit
+# bashcompinit
+
+# [[ -r "$HOME/.local/share/bash-completion/completions/_codex" ]] && source "$HOME/.local/share/bash-completion/completions/_codex"
+
 set -o vi
 
 bindkey '^R' history-incremental-search-backward
@@ -42,7 +51,6 @@ if [[ $(uname) == "Darwin" ]]; then
 
 elif command -v pacman > /dev/null; then
     source ~/arch.zsh
-
 else
     echo 'Unknown OS!'
 fi

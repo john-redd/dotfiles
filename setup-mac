@@ -40,3 +40,5 @@ brew install parallel
 brew tap lucagrulla/tap
 brew install cw
 brew install gnu-sed
+
+brew install bluetoothconnector

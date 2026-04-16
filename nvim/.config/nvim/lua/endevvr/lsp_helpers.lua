@@ -37,7 +37,7 @@ local function on_attach(client, bufnr)
 		nmap("K", vim.lsp.buf.hover, "Hover Documentation")
 	end
 
-	if disable_formatting_set[client.config.cmd[1]] ~= nil then
+	if disable_formatting_set[client.name] ~= nil then
 		client.server_capabilities.documentFormattingProvider = false
 	end
 

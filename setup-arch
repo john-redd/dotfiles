@@ -4,13 +4,11 @@
 sudo pacman -S --noconfirm networkmanager network-manager-applet
 
 # General Utilities
-sudo pacman -S --noconfirm man zsh tmux less ripgrep fd fzf jq stow qutebrowser starship lazygit git-delta libnotify atuin openssl openssl-1.1 unzip xdg-utils pdfjs lsof eza
+sudo pacman -S --noconfirm man zsh tmux less jq stow qutebrowser git-delta libnotify openssl openssl-1.1 unzip xdg-utils pdfjs lsof
 
 sudo pacman -S --noconfirm iwd impala
 
 sudo pacman -S --noconfirm discord
-
-sudo pacman -S --noconfirm bat
 
 sudo pacman -S --noconfirm posgresql
 
@@ -61,6 +59,7 @@ sudo pacman -S --noconfirm calibre
 # Rust toolchain
 sudo pacman -S --noconfirm lld clang
 
+# Installs the rust toolchain
 curl https://mise.run | sh
 
 # Yazi & deps
@@ -68,7 +67,6 @@ sudo pacman -S --noconfirm yazi ffmpeg 7zip jq poppler zoxide imagemagick
 
 # Install Paru Start
 sudo pacman -S --noconfirm base-devel rustup
-sudo pacman -S --noconfirm rustup
 rustup default stable
 git clone https://aur.archlinux.org/paru.git ~/paru
 cd ~/paru
@@ -84,8 +82,6 @@ paru -S --noconfirm brave-bin
 paru -S resvg
 
 paru -S spotify
-
-paru -S lazydocker
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
@@ -104,3 +100,5 @@ sudo pacman -S --noconfirm greetd-tuigreet
 # Login Manager End
 
 sudo pacman -R kitty dolphin
+
+curl -fsSL https://claude.ai/install.sh | bash

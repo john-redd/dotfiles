@@ -44,10 +44,11 @@ return require("packer").startup(function(use)
   use("sainnhe/everforest")
 
   -- Treesitter
-  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", branch = "main" })
   use({
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
+    branch = "main"
   })
   use("nvim-treesitter/nvim-treesitter-context")
 
@@ -99,7 +100,7 @@ return require("packer").startup(function(use)
   use({ 'ray-x/guihua.lua', run = 'cd lua/fzy && make' })
 
   -- Rust
-  use({ 'mrcjkb/rustaceanvim' })
+  use({ 'mrcjkb/rustaceanvim', branch = "main" })
   use({ 'saecki/crates.nvim' })
 
   -- Utility

@@ -31,6 +31,7 @@ fzf = "latest"
 "pipx:canvas" = "latest"
 "npm:@openai/codex" = "latest"
 "npm:opencode-ai" = "latest"
+"cargo:ripgrep_all" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

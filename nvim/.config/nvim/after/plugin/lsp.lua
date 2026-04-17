@@ -9,6 +9,9 @@ require("mason-lspconfig").setup({
     "docker_compose_language_service",
     "dockerls",
     "html",
+    "sqls",
+    "bashls",
+    -- "codespell",
   },
   automatic_enable = {
     exclude = {

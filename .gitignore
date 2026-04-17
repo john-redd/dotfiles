@@ -5,7 +5,7 @@ home/.local/bin/bw
 home/.local/bin/python3.13
 home/.local/bin/python3.14
 home/.local/bin/get-aws-secret
-home/.local/bin/bw
+home/.local/bin/claude
 home/.local/bin/bw
 home/.local/share
 migratenanny

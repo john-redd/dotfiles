@@ -42,3 +42,9 @@ brew install cw
 brew install gnu-sed
 
 brew install bluetoothconnector
+
+brew install difftastic
+
+curl -fsSL https://claude.ai/install.sh | bash
+
+brew install gawk

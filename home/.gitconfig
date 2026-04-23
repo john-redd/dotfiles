@@ -13,6 +13,126 @@
 [alias]
 	conflicts = diff --name-only --diff-filter=U
   diff-side-by-side = -c delta.features=side-by-side diff
+  # Difftastic aliases, so `git dlog -p` is `git log -p`
+  # with difftastic and likewise for the other subcommands.
+  dlog = -c diff.external=difft log --ext-diff
+  dshow = -c diff.external=difft show --ext-diff
+  ddiff = -c diff.external=difft diff
+  who = shortlog -sn --no-merges HEAD
+  dmg = log --oneline -i -E --grep='(incident|outage|downtime|rollback|revert|mitigate|mitigation|hotfix|broke|prod)' --since='1 year ago'
+  bugs = log --oneline -i -E --grep='(bug|bugfix|fix|fixed|fixes|defect|regression|hotfix|broke)' --since='1 year ago'
+  bugfiles = !git log --name-only --format='' -i -E --grep='(bug|bugfix|fix|fixed|fixes|defect|regression|hotfix|broke)' --since='1 year ago' | sort | uniq -c | sort -nr
+  monthly = !git log --since='1 year ago' --format='%ad' --date=format:'%Y-%m' | sort | uniq -c
+  churn = !git log --format='' --name-only --diff-filter=AM --since='1 year ago' | sort | uniq -c | sort -nr | head -20
+  # Show a specific format string and its number of log entries
+  log-of-format-and-count = "!f() { format=\"$1\"; shift; git log $@ --format=oneline --format="$format" | awk '{a[$0]++}END{for(i in a){print i, a[i], int((a[i]/NR)*100) \"%\"}}' | sort; }; f"
+  log-of-count-and-format = "!f() { format=\"$1\"; shift; git log $@ --format=oneline --format="$format" | awk '{a[$0]++}END{for(i in a){print a[i], int((a[i]/NR)*100) \"%\", i}}' | sort -nr; }; f"
+  # Show the number of log entries by a specific format string and date format string
+  log-of-format-and-count-with-date = "!f() { format=\"$1\"; shift; date_format=\"$1\"; shift; git log $@ --format=oneline --format=\"$format\" --date=format:\"$date_format\" | awk '{a[$0]++}END{for(i in a){print i, a[i], int((a[i]/NR)*100) \"%\"}}' | sort -r; }; f"
+  log-of-count-and-format-with-date = "!f() { format=\"$1\"; shift; date_format=\"$1\"; shift; git log $@ --format=oneline --format=\"$format\" --date=format:\"$date_format\" | awk '{a[$0]++}END{for(i in a){print a[i], int((a[i]/NR)*100) \"%\", i}}' | sort -nr; }; f"
+  # Show the number of log items by email
+  log-of-email-and-count         = "!f() { git log-of-format-and-count \"%aE\" $@; }; f"
+  log-of-count-and-email         = "!f() { git log-of-count-and-format \"%aE\" $@; }; f"
+  # Show the number of log items by day
+  log-of-day-and-count           = "!f() { git log-of-format-and-count-with-date \"%ad\" \"%Y-%m-%d\" $@ ; }; f"
+  log-of-count-and-day           = "!f() { git log-of-count-and-format-with-date \"%ad\" \"%Y-%m-%d\" $@ ; }; f"
+  summary = "!f() { \
+    printf \"Summary of this branch...\n\"; \
+    printf \"%s\n\" $(git rev-parse --abbrev-ref HEAD); \
+    printf \"%s first commit timestamp\n\" $(git log --date-order --format=%cI | tail -1); \
+    printf \"%s latest commit timestamp\n\" $(git log -1 --date-order --format=%cI); \
+    printf \"%d commit count\n\" $(git rev-list --count HEAD); \
+    printf \"%d date count\n\" $(git log --format=oneline --format=\"%ad\" --date=format:\"%Y-%m-%d\" | awk '{a[$0]=1}END{for(i in a){n++;} print n}'); \
+    printf \"%d tag count\n\" $(git tag | wc -l); \
+    printf \"%d author count\n\" $(git log --format=oneline --format=\"%aE\" | awk '{a[$0]=1}END{for(i in a){n++;} print n}'); \
+    printf \"%d committer count\n\" $(git log --format=oneline --format=\"%cE\" | awk '{a[$0]=1}END{for(i in a){n++;} print n}'); \
+    printf \"%d local branch count\n\" $(git branch | grep -v \" -> \" | wc -l); \
+    printf \"%d remote branch count\n\" $(git branch -r | grep -v \" -> \" | wc -l); \
+    printf \"\nSummary of this directory...\n\"; \
+    printf \"%s\n\" $(pwd); \
+    printf \"%d file count via git ls-files\n\" $(git ls-files | wc -l); \
+    printf \"%d file count via find command\n\" $(find . | wc -l); \
+    printf \"%d disk usage\n\" $(du -s | awk '{print $1}'); \
+    printf \"\nMost-active authors, with commit count and %%...\n\"; git log-of-count-and-email | head -7; \
+    printf \"\nMost-active dates, with commit count and %%...\n\"; git log-of-count-and-day | head -7; \
+    printf \"\nMost-active files, with churn count\n\"; git churn | head -7; \
+  }; f"
+  # chart: show a summary chart of activity per author.
+  #
+  # Example:
+  #
+  #     $ git chart
+  #     ..X..........X...2..12 alice@example.com
+  #     ....2..2..13.......... bob@example.com
+  #     2.....1....11......... carol@example.com
+  #     ..1............1..1... david@example.com
+  #     ....1.......1.3.3.22.2 eve@example.com
+  #
+  # The chart rows are the authors.
+  # TODO: sort the rows meaningfully,
+  # such as alphabetically, or by count.
+  #
+  # The chart columns are the days.
+  # The chart column prints one character per day.
+  #
+  #   * For 1-9 commits, show the number.
+  #   * For 10 or more commits, show "X" as a visual indicator.
+  #   * For no commits, show "." as a visual placeholder.
+  #
+  # The chart timeline adjusts the date range automatically:
+  #
+  #   * The timeline starts with the date of the earliest commit.
+  #   * The timeline stops with the date of the latest commit.
+  #   * The intent is to show the most relevant information.
+  #
+  # The chart default is to look at the past 6 weeks;
+  # this gives a good balance of recency and speed
+  # for a team that's currently working on a repo,
+  # and also gives a good balance of fitting within
+  # one terminal window 80 character width.
+  #
+  # You can adjust how far back the chart looks,
+  # by providing your own `--since` parameter.
+  # For example if you want to chart an older repo,
+  # that does not have any recent commits, then you
+  # you must provide a longer `--since` parameter.
+  #
+  chart = "!f() { \
+    git log \
+    --format=oneline \
+    --format=\"%aE %at\" \
+    --since=6-weeks-ago \
+    $* | \
+    gawk ' \
+    function time_to_slot(t) { return strftime(\"%Y-%m-%d\", t, true) } \
+    function count_to_char(i) { return (i > 0) ? ((i < 10) ? i : \"X\") : \".\" } \
+    BEGIN { \
+      time_min = systime(); time_max = 0; \
+      SECONDS_PER_DAY=86400; \
+    } \
+    { \
+      item = $1; \
+      time = 0 + $2; \
+      if (time > time_max){ time_max = time } else if (time < time_min){ time_min = time }; \
+      slot = time_to_slot(time); \
+      items[item]++; \
+      slots[slot]++; \
+      views[item, slot]++; \
+    } \
+    END{ \
+      printf(\"Chart time range %s to %s.\\n\", time_to_slot(time_min), time_to_slot(time_max)); \
+      time_max_add = time_max += SECONDS_PER_DAY; \
+      for(item in items){ \
+        row = \"\"; \
+        for(time = time_min; time < time_max_add; time += SECONDS_PER_DAY) { \
+          slot = time_to_slot(time); \
+          count = views[item, slot]; \
+          row = row count_to_char(count); \
+        } \
+        print row, item; \
+      } \
+    }'; \
+  }; f"
 [core]
   pager = delta
   excludesfile = ~/.gitignore

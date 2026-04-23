@@ -7,7 +7,10 @@
         "UTMS",
         "protoreflect",
         "nolint",
-        "synctest"
+        "synctest",
+        "fumage",
+        "fhir",
+        "codeable"
     ],
     "flagWords": [
         "hte"

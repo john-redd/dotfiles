@@ -70,7 +70,7 @@ return require("packer").startup(function(use)
   use ({ "creativenull/efmls-configs-nvim" })
 
   -- Autocompletion
-  use({ 'saghen/blink.cmp' }, {
+  use({ 'saghen/blink.cmp', branch = "v1" }, {
     requires = {
       dependencies = { 'rafamadriz/friendly-snippets' }
     }
@@ -129,8 +129,7 @@ return require("packer").startup(function(use)
   use("kristijanhusak/vim-dadbod-completion")
   use("stevearc/aerial.nvim")
 
-  -- use("github/copilot.vim")
-  use("zbirenbaum/copilot.lua")
+  use("coder/claudecode.nvim")
 
   -- Misc
   use("renerocksai/telekasten.nvim")

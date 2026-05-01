@@ -33,6 +33,7 @@ export TERM=xterm-256color
 export CDPATH=".:..:$HOME"
 export BACON_PREFS="$HOME/.config/bacon/prefs.toml"
 export XDG_CONFIG_HOME="$HOME/.config"
+export ENABLE_CLAUDEAI_MCP_SERVERS=false
 
 append_path "$HOME/.local/bin"
 append_path "$HOME/.cargo/bin"

@@ -11,9 +11,9 @@ prSections:
         hidden: true
   - title: Needs My Review
     filters: is:open review-requested:@me
-  # - title: Subscribed
-  #   filters: is:open -author:@me repo:cli/cli repo:dlvhdr/gh-dash
-  #   limit: 50 # optional limit of rows fetched for this section
+  - title: Radial - Beta to Prod
+    filters: is:open org:Radial-Health base:main head:beta
+    limit: 50 # optional limit of rows fetched for this section
 # issuesSections:
 #   - title: Created
 #     filters: is:open author:@me

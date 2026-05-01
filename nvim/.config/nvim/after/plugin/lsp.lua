@@ -11,6 +11,7 @@ require("mason-lspconfig").setup({
     "html",
     "sqls",
     "bashls",
+    "markdown_oxide"
     -- "codespell",
   },
   automatic_enable = {

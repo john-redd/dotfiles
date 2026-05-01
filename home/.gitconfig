@@ -135,11 +135,11 @@
   }; f"
 [core]
   pager = delta
-  excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore_global
 
   ; fsmonitor = true
   untrackedCache = true
-  hooksPath = /Users/johnredd/.githooks
+  hooksPath = ~/.githooks
 [interactive]
   diffFilter = delta --color-only
 [delta]

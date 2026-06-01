@@ -34,9 +34,12 @@ export CDPATH=".:..:$HOME"
 export BACON_PREFS="$HOME/.config/bacon/prefs.toml"
 export XDG_CONFIG_HOME="$HOME/.config"
 export ENABLE_CLAUDEAI_MCP_SERVERS=false
+# export GOPATH="$HOME/.local/share/mise/installs/go/1.26.2"
 
 append_path "$HOME/.local/bin"
 append_path "$HOME/.cargo/bin"
+append_path "$HOME/.local/share/nvim/mason/bin"
+# append_path "$GOPATH"
 
 alias n="nvim"
 alias lg="lazygit"

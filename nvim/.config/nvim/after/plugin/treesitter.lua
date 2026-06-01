@@ -32,7 +32,8 @@ if tree_sitter_ok then
     "gitattributes",
     "gitcommit",
     "gitignore",
-    "sql"
+    "sql",
+    "printf"
   }
   -- install parsers from custom opts.ensure_installed
   if ensure_installed and #ensure_installed > 0 then

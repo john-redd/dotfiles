@@ -1,3 +1,0 @@
-;; extends
-
-; (format) @string.special

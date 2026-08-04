@@ -1,0 +1,76 @@
+= man-new(1)
+John Redd
+:doctype: manpage
+:manmanual: User Commands
+:mansource: man-new 1.0
+
+== NAME
+
+man-new - create or edit a personal man page, authored in AsciiDoc
+
+== SYNOPSIS
+
+*man-new* [*--from-help*] _name_ [_section_]
+
+== DESCRIPTION
+
+Creates a new man page source under
+`~/.local/share/man-src/man<section>/<name>.adoc`
+using a minimal AsciiDoc template, opens it in _$EDITOR_, then compiles it
+with *asciidoctor* into
+`~/.local/share/man/man<section>/<name>.<section>`.
+
+If the source file already exists, no template is written and the existing
+file is opened as-is, so *man-new* also works as a quick "edit and recompile
+this page" command.
+
+Both the AsciiDoc source and the compiled page live under
+`~/.local/share`, which is symlinked into the *dotfiles* git repository, so
+edits are version-controlled and pushed to GitHub along with the rest of the
+dotfiles.
+
+With *--from-help*, the initial template is seeded from
+`<name> --help` and `<name> --version` instead of a blank page: the usage
+block becomes SYNOPSIS, and single-line "flag, gap, description" option
+lines (the GNU-style format used by tools like *stow* and *jq*) are turned
+into OPTIONS entries automatically. This is a heuristic, not a full parser
+-- tools that print an option's description on a separate line from its
+flag (the clap/cobra style used by tools like *ripgrep*) won't get
+auto-populated OPTIONS. Either way, the full raw `--help` output is always
+appended under a HELP OUTPUT section so nothing is lost; delete it once
+you've folded what you need into DESCRIPTION/OPTIONS by hand.
+
+== OPTIONS
+
+*--from-help*::
+  Seed the template from `<name> --help`/`--version` instead of a blank
+  page. Requires _name_ to be an executable on `$PATH`.
+
+_section_::
+  Man section number, e.g. 1 for user commands, 5 for file formats, 8 for
+  admin commands. Defaults to 1.
+
+== EXAMPLES
+
+*man-new deploy-check*::
+  Creates and opens `~/.local/share/man-src/man1/deploy-check.adoc`, then
+  compiles it to `~/.local/share/man/man1/deploy-check.1`.
+
+*man-new fstab 5*::
+  Creates and opens `~/.local/share/man-src/man5/fstab.adoc`, then compiles
+  it to `~/.local/share/man/man5/fstab.5`.
+
+*man-new --from-help jq*::
+  Seeds `~/.local/share/man-src/man1/jq.adoc` from `jq --help`/`--version`
+  before opening it for editing.
+
+== FILES
+
+`~/.local/bin/man-new`::
+  The script itself.
+
+`~/.local/share/man-src/man<section>/<name>.adoc`::
+  AsciiDoc source.
+
+`~/.local/share/man/man<section>/<name>.<section>`::
+  Compiled man page.

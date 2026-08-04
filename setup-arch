@@ -104,3 +104,5 @@ sudo pacman -R kitty dolphin
 curl -fsSL https://claude.ai/install.sh | bash
 
 curl -fsSL https://pi.dev/install.sh | sh
+
+sudo pacman -S --noconfirm asciidoctor

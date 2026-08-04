@@ -48,3 +48,5 @@ brew install difftastic
 curl -fsSL https://claude.ai/install.sh | bash
 
 brew install gawk
+
+brew install asciidoctor

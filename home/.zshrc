@@ -28,11 +28,12 @@ bindkey -M vicmd '^V' edit-command-line
 export KEYTIMEOUT=1
 export EDITOR='nvim'
 export VISUAL='nvim'
-export MANPAGER="nvim --clean +Man!"
+export MANPAGER="nvim +Man!"
 export TERM=xterm-256color
 export CDPATH=".:..:$HOME"
 export BACON_PREFS="$HOME/.config/bacon/prefs.toml"
 export XDG_CONFIG_HOME="$HOME/.config"
+export MANPATH="$HOME/.local/share/man:$MANPATH"
 export ENABLE_CLAUDEAI_MCP_SERVERS=false
 # export GOPATH="$HOME/.local/share/mise/installs/go/1.26.2"
 

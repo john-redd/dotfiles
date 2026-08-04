@@ -1,0 +1,195 @@
+#!/usr/bin/env bash
+
+SRC_DIR="$HOME/.local/share/man-src"
+MAN_DIR="$HOME/.local/share/man"
+
+usage() {
+  echo "Usage: man-new [--from-help] <name> [section]"
+  echo "  section defaults to 1 (user commands)"
+  echo "  --from-help seeds the page from '<name> --help'/'--version' instead of a blank template"
+  echo "  source:   $SRC_DIR/man<section>/<name>.adoc"
+  echo "  compiled: $MAN_DIR/man<section>/<name>.<section>"
+}
+
+# Runs "$@" with a 5s watchdog, without depending on GNU coreutils' timeout.
+run_capture() {
+  local tmp
+  tmp=$(mktemp)
+  ("$@" > "$tmp" 2>&1) &
+  local pid=$!
+  (sleep 5 && kill -9 "$pid" 2>/dev/null) &
+  local watcher=$!
+  wait "$pid" 2>/dev/null
+  kill "$watcher" 2>/dev/null
+  wait "$watcher" 2>/dev/null
+  cat "$tmp"
+  rm -f "$tmp"
+}
+
+FROM_HELP=0
+if [[ $1 == "--from-help" ]]; then
+  FROM_HELP=1
+  shift
+fi
+
+NAME=$1
+SECTION=${2:-1}
+
+if [[ -z $NAME ]]; then
+  usage
+  exit 1
+fi
+
+if ! command -v asciidoctor > /dev/null; then
+  echo "asciidoctor not found (brew install asciidoctor / pacman -S asciidoctor)" >&2
+  exit 1
+fi
+
+SRC_SECTION_DIR="$SRC_DIR/man$SECTION"
+OUT_SECTION_DIR="$MAN_DIR/man$SECTION"
+SRC="$SRC_SECTION_DIR/$NAME.adoc"
+OUT="$OUT_SECTION_DIR/$NAME.$SECTION"
+
+mkdir -p "$SRC_SECTION_DIR" "$OUT_SECTION_DIR"
+
+blank_template() {
+  cat <<EOF
+= $NAME($SECTION)
+John Redd
+:doctype: manpage
+:manmanual: User Commands
+:mansource: $NAME 1.0
+
+== NAME
+
+$NAME - one-line description
+
+== SYNOPSIS
+
+*$NAME* [_OPTIONS_]
+
+== DESCRIPTION
+
+Describe what $NAME does.
+
+== OPTIONS
+
+*-h*::
+  Show help.
+
+== EXAMPLES
+
+*$NAME*
+EOF
+}
+
+# Best-effort scaffold from "$NAME --help" / "--version". Heuristic, not a
+# full parser: it reliably picks up the usage block and single-line
+# "flag<gap>description" options (GNU-style, e.g. stow/jq). Tools that put
+# the description on a separate line from the flag (clap/cobra style, e.g.
+# ripgrep) won't get auto-populated OPTIONS entries -- the raw --help output
+# is always kept at the bottom so nothing found is lost, just unsorted.
+help_scaffold() {
+  if ! command -v "$NAME" > /dev/null; then
+    echo "man-new: '$NAME' not found on PATH, can't read --help" >&2
+    return 1
+  fi
+
+  local help_text version_text synopsis options
+  help_text=$(run_capture "$NAME" --help)
+  version_text=$(run_capture "$NAME" --version | head -1)
+  [[ -z $version_text ]] && version_text="$NAME 1.0"
+
+  synopsis=$(printf '%s\n' "$help_text" | awk '
+    BEGIN { found = 0; started = 0 }
+    match(tolower($0), /^(usage|synopsis):[ \t]*/) {
+      found = 1
+      rest = substr($0, RLENGTH + 1)
+      if (rest != "") { print rest; started = 1 }
+      next
+    }
+    found && /^[[:space:]]*$/ {
+      if (started) exit
+      next
+    }
+    found { started = 1; print }
+  ')
+  [[ -z $synopsis ]] && synopsis="$NAME [_OPTIONS_]"
+
+  options=$(printf '%s\n' "$help_text" | awk '
+    {
+      line = $0
+      sub(/^[[:space:]]+/, "", line)
+      if (line !~ /^-/) next
+      if (match(line, /[[:space:]]{2,}/)) {
+        flag = substr(line, 1, RSTART - 1)
+        desc = substr(line, RSTART + RLENGTH)
+        gsub(/[[:space:]]+$/, "", flag)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", desc)
+        if (desc != "") {
+          print "*" flag "*::"
+          print "  " desc
+          print ""
+        }
+      }
+    }
+  ')
+
+  cat <<EOF
+= $NAME($SECTION)
+John Redd
+:doctype: manpage
+:manmanual: User Commands
+:mansource: $version_text
+
+== NAME
+
+$NAME - one-line description
+
+== SYNOPSIS
+
+----
+$synopsis
+----
+
+== DESCRIPTION
+
+Describe what $NAME does.
+
+EOF
+
+  if [[ -n $options ]]; then
+    echo "== OPTIONS"
+    echo
+    echo "$options"
+  fi
+
+  cat <<EOF
+== HELP OUTPUT
+
+Raw --help output, kept for reference while filling in the sections above.
+Safe to delete once OPTIONS/DESCRIPTION are complete.
+
+----
+$help_text
+----
+EOF
+}
+
+if [[ ! -e $SRC ]]; then
+  if [[ $FROM_HELP -eq 1 ]]; then
+    help_scaffold > "$SRC" || { rm -f "$SRC"; exit 1; }
+  else
+    blank_template > "$SRC"
+  fi
+  echo "Created $SRC"
+fi
+
+"${EDITOR:-vi}" "$SRC"
+
+if asciidoctor -b manpage -o "$OUT" "$SRC"; then
+  echo "Compiled $OUT"
+else
+  echo "asciidoctor failed, $OUT was not updated" >&2
+  exit 1
+fi

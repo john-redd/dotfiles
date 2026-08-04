@@ -1,0 +1,111 @@
+'\" t
+.\"     Title: man-new
+.\"    Author: John Redd
+.\" Generator: Asciidoctor 2.0.26
+.\"      Date: 2026-08-04
+.\"    Manual: User Commands
+.\"    Source: man-new 1.0
+.\"  Language: English
+.\"
+.TH "MAN\-NEW" "1" "2026-08-04" "man\-new 1.0" "User Commands"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\fI\\$2\fP <\\$1>\\$3
+..
+.als MTO URL
+.if \n[.g] \{\
+.  mso www.tmac
+.  am URL
+.    ad l
+.  .
+.  am MTO
+.    ad l
+.  .
+.  LINKSTYLE blue R < >
+.\}
+.SH "NAME"
+man-new \- create or edit a personal man page, authored in AsciiDoc
+.SH "SYNOPSIS"
+.sp
+\fBman\-new\fP [\fB\-\-from\-help\fP] \fIname\fP [\fIsection\fP]
+.SH "DESCRIPTION"
+.sp
+Creates a new man page source under
+\f(CR~/.local/share/man\-src/man<section>/<name>.adoc\fP
+using a minimal AsciiDoc template, opens it in \fI$EDITOR\fP, then compiles it
+with \fBasciidoctor\fP into
+\f(CR~/.local/share/man/man<section>/<name>.<section>\fP.
+.sp
+If the source file already exists, no template is written and the existing
+file is opened as\-is, so \fBman\-new\fP also works as a quick "edit and recompile
+this page" command.
+.sp
+Both the AsciiDoc source and the compiled page live under
+\f(CR~/.local/share\fP, which is symlinked into the \fBdotfiles\fP git repository, so
+edits are version\-controlled and pushed to GitHub along with the rest of the
+dotfiles.
+.sp
+With \fB\-\-from\-help\fP, the initial template is seeded from
+\f(CR<name> \-\-help\fP and \f(CR<name> \-\-version\fP instead of a blank page: the usage
+block becomes SYNOPSIS, and single\-line "flag, gap, description" option
+lines (the GNU\-style format used by tools like \fBstow\fP and \fBjq\fP) are turned
+into OPTIONS entries automatically. This is a heuristic, not a full parser \(em tools that print an option\(cqs description on a separate line from its
+flag (the clap/cobra style used by tools like \fBripgrep\fP) won\(cqt get
+auto\-populated OPTIONS. Either way, the full raw \f(CR\-\-help\fP output is always
+appended under a HELP OUTPUT section so nothing is lost; delete it once
+you\(cqve folded what you need into DESCRIPTION/OPTIONS by hand.
+.SH "OPTIONS"
+.sp
+\fB\-\-from\-help\fP
+.RS 4
+Seed the template from \f(CR<name> \-\-help\fP/\f(CR\-\-version\fP instead of a blank
+page. Requires \fIname\fP to be an executable on \f(CR$PATH\fP.
+.RE
+.sp
+\fIsection\fP
+.RS 4
+Man section number, e.g. 1 for user commands, 5 for file formats, 8 for
+admin commands. Defaults to 1.
+.RE
+.SH "EXAMPLES"
+.sp
+\fBman\-new deploy\-check\fP
+.RS 4
+Creates and opens \f(CR~/.local/share/man\-src/man1/deploy\-check.adoc\fP, then
+compiles it to \f(CR~/.local/share/man/man1/deploy\-check.1\fP.
+.RE
+.sp
+\fBman\-new fstab 5\fP
+.RS 4
+Creates and opens \f(CR~/.local/share/man\-src/man5/fstab.adoc\fP, then compiles
+it to \f(CR~/.local/share/man/man5/fstab.5\fP.
+.RE
+.sp
+\fBman\-new \-\-from\-help jq\fP
+.RS 4
+Seeds \f(CR~/.local/share/man\-src/man1/jq.adoc\fP from \f(CRjq \-\-help\fP/\f(CR\-\-version\fP
+before opening it for editing.
+.RE
+.SH "FILES"
+.sp
+\f(CR~/.local/bin/man\-new\fP
+.RS 4
+The script itself.
+.RE
+.sp
+\f(CR~/.local/share/man\-src/man<section>/<name>.adoc\fP
+.RS 4
+AsciiDoc source.
+.RE
+.sp
+\f(CR~/.local/share/man/man<section>/<name>.<section>\fP
+.RS 4
+Compiled man page.
+.RE
+.SH "AUTHOR"
+.sp
+John Redd

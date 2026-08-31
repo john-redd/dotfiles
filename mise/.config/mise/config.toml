@@ -2,7 +2,6 @@
 node = "24.1.0"
 npm = "11.4.1"
 go = "latest"
-rust = "latest"
 "cargo:eza" = "latest"
 "cargo:ripgrep" = "latest"
 "cargo:bat" = "latest"

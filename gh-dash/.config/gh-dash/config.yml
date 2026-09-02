@@ -14,6 +14,9 @@ prSections:
   - title: Radial - Beta to Prod
     filters: is:open org:Radial-Health base:main head:beta
     limit: 50 # optional limit of rows fetched for this section
+  - title: Radial - Agent Workflows PRs
+    filters: is:pr is:open org:Radial-Health base:beta author:radial-agent-workflows[bot]
+    limit: 50 # optional limit of rows fetched for this section
 # issuesSections:
 #   - title: Created
 #     filters: is:open author:@me

@@ -125,6 +125,10 @@ if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 10'
 
 [[on-window-detected]]
+if.app-id = 'tandem.app'
+run = 'layout tiling'
+
+[[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
 # if.app-name-regex-substring = 'settings'
 # if.window-title-regex-substring = 'substring'

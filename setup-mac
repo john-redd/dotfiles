@@ -50,3 +50,5 @@ curl -fsSL https://claude.ai/install.sh | bash
 brew install gawk
 
 brew install asciidoctor
+
+curl -fsSL https://pi.dev/install.sh | sh

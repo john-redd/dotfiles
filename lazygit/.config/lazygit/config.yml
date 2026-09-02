@@ -10,6 +10,11 @@ keybinding:
     quit-alt1: '<c-c>' # alternative/alias of quit
     return: '<esc>'
     return-alt1: <disabled>
+    rangeSelectDown: <disabled>
+    rangeSelectUp: <disabled>
+  commits:
+    moveDownCommit: '<ctrl+shift+j>'
+    moveUpCommit: '<ctrl+shift+k>'
 gui:
   mouseEvents: true
 git:

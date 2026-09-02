@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+SEARCH=$1
+
+if [[ -z $SEARCH ]]; then
+  echo "Usage: grep-to-vim <SEARCH>"
+  exit 1
+fi
+
+rg --vimgrep --smart-case "$SEARCH" | nvim -q -
